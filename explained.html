@@ -43,8 +43,8 @@
       <li><span class="yr">2021</span><div><h3>Spin and sunlight</h3><p>First papers: magnetic nanoribbons and monolayers for spintronics, and 2D hybrid perovskites for solar cells.</p></div></li>
       <li><span class="yr">2022</span><div><h3>Batteries and electron dynamics</h3><p>Designed 2D electrode materials for lithium and sodium batteries, began simulating how electrons move after light hits a material, and co-wrote a review on catalysts for nitrogen fixation.</p></div></li>
       <li><span class="yr">2024</span><div><h3>Light-driven chemistry</h3><p>Hot electrons in COFs and perovskites, water splitting, nitrogen fixation and thermoelectrics. Completed my Ph.D. in August 2024.</p></div></li>
-      <li><span class="yr">2025</span><div><h3>Wayne State University, Detroit</h3><p>Postdoc with Prof. Zhenfei Liu on quantum-dot gels and 2D perovskites.</p></div></li>
-      <li><span class="yr">2026</span><div><h3>UMass Amherst</h3><p>Postdoc with Prof. Alexandra Zagalskaya, modelling the surfaces where electrocatalysis happens.</p></div></li>
+      <li><span class="yr">2025</span><div><h3>Wayne State University, Detroit</h3><p>Postdoc with Prof. Zhenfei Liu on quantum-dot gels and 2D perovskites. Our graph neural network for fast molecular dynamics, E(q)C-GNN, was published.</p></div></li>
+      <li><span class="yr">2026</span><div><h3>UMass Amherst</h3><p>Postdoc with Prof. Alexandra Zagalskaya, modelling the surfaces where electrocatalysis happens. Machine-learning study of nitrogen reduction published in ACS Catalysis.</p></div></li>
     </ol>
   </section>
 
@@ -88,6 +88,12 @@
         <p>A graph neural network sees a material as a network: atoms are dots and bonds are lines. Atoms pass messages to their neighbours, and after a few rounds the network predicts energies and forces. Once trained on DFT results, it gives similar answers far faster, so we can simulate much bigger systems for much longer.</p>
         <p class="mine">I co-developed E(q)C-GNN (J. Phys. Chem. Lett. 2025) and used it to speed up simulations of nitrogen reduction (ACS Catal. 2026).</p>
       </article>
+      <article class="ex-card flagship">
+        <canvas class="anim" data-anim="gas" role="img" aria-label="Animation: DFT, AIMD, GNN, light absorption, nitrogen reduction and NAMD on a GaS sheet"></canvas>
+        <h3>Putting it all together: making ammonia on GaS</h3>
+        <p>My favourite project uses every tool on this page to answer one question: can a thin sheet of gallium sulfide (GaS) turn nitrogen from the air into ammonia using only sunlight? DFT builds the sheet, AIMD checks it survives room temperature, and a graph neural network with "attention" shows where nitrogen likes to sit. Removing one sulfur atom exposes gallium atoms that grab N₂. Light then supplies electrons, every hydrogenation step becomes downhill, and NAMD shows the electrons last about 4 nanoseconds, thousands of times longer than in the common photocatalyst TiO₂, so they have time to react.</p>
+        <p class="mine">A. Ghosh et al., ACS Catal. 16, 3284–3295 (2026). <a href="https://doi.org/10.1021/acscatal.5c07193">Read the paper</a></p>
+      </article>
     </div>
   </section>
 
@@ -118,7 +124,7 @@
         <canvas class="anim" data-anim="electro" role="img" aria-label="Animation of water electrolysis with and without a catalyst"></canvas>
         <h3>Electrocatalysis</h3>
         <p>Electrocatalysis uses electricity, ideally from solar or wind, to drive chemical reactions such as splitting water. A good catalyst on the electrode makes the reaction faster and wastes less energy. I model what happens atom by atom at that surface to help design better catalysts.</p>
-        <p class="mine">My current work at UMass Amherst, including BiVO₄ surfaces for oxygen evolution(J. Chem. Phys., 2026).</p>
+        <p class="mine">My current work at UMass Amherst, including BiVO₄ surfaces for oxygen evolution with Lawrence Livermore National Laboratory (J. Chem. Phys., in press).</p>
       </article>
       <article class="ex-card">
         <canvas class="anim" data-anim="battery" role="img" aria-label="Animation of lithium ions moving in a battery"></canvas>

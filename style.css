@@ -247,3 +247,5 @@ canvas.anim {
 @media (max-width: 760px) {
   .ex-grid { grid-template-columns: 1fr; }
 }
+
+.ex-card.flagship canvas.anim { border-color: var(--teal); border-width: 2px; }

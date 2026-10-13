@@ -3,7 +3,7 @@
 // "Research explained" page. Any <canvas class="anim" data-anim="NAME">
 // on a page is animated automatically, where NAME is one of:
 //   dft, aimd, namd, hop, gnn, pv, water, nrr, electro, spin,
-//   battery, thermo, qd
+//   battery, thermo, qd, gas (flagship GaS NRR story)
 // To add an animation to a page, copy one such <canvas> line.
 // You don't need to edit this file.
 // =====================================================================
@@ -542,6 +542,163 @@
       caption(c, t < 2.2 ? "The quantum dot catches light" : t < 4 ? "It hands the energy to the dye, like a relay race" : "The dye glows with a new colour");
     }
   };
+
+  // ---------- flagship: photocatalytic NRR on S-vacancy GaS (ACS Catal. 2026) ----------
+  S.gas = (() => {
+    const ST = [  // stage name, start time
+      ["DFT", 0], ["AIMD", 3.6], ["GNN", 7.2], ["Light", 11.6], ["NRR", 14.8], ["NAMD", 20.6]];
+    const END = 25.5, VAC = 5;
+    const cols = 10, X = i => 30 + i * 42;
+    const yS1 = 196, yG1 = 218, yG2 = 244, yS2 = 266;
+    function stageOf(t) { let k = 0; ST.forEach((s, i) => { if (t >= s[1]) k = i; }); return k; }
+    function chips(c, k) {
+      let x = 16;
+      ST.forEach((s, i) => {
+        c.font = '600 11px "Public Sans", Arial, sans-serif';
+        const w = c.measureText(s[0]).width + 16, on = i === k, done = i < k;
+        c.globalAlpha = 1; c.fillStyle = on ? C.ink : "transparent"; c.strokeStyle = on ? C.ink : C.rule; c.lineWidth = 1;
+        c.beginPath(); c.roundRect ? c.roundRect(x, 36, w, 20, 10) : c.rect(x, 36, w, 20); c.fill(); c.stroke();
+        text(c, s[0], x + w / 2, 46.5, on ? C.paper : done ? C.teal : C.muted, 11, "center", 1, 600);
+        x += w + 5;
+      });
+    }
+    function sheet(c, t, amp, vac, gaGlow) {
+      const j = (i, row) => [Math.sin(t * 8.3 + i * 1.7 + row) * amp, Math.cos(t * 7.1 + i * 2.3 + row * 1.3) * amp];
+      const P = { s1: [], g1: [], g2: [], s2: [] };
+      for (let i = 0; i < cols; i++) {
+        let d = j(i, 0); P.s1.push([X(i) + d[0], yS1 + d[1]]);
+        d = j(i, 1); P.g1.push([X(i) + 21 + d[0], yG1 + d[1]]);
+        d = j(i, 2); P.g2.push([X(i) + 21 + d[0], yG2 + d[1]]);
+        d = j(i, 3); P.s2.push([X(i) + d[0], yS2 + d[1]]);
+      }
+      const L = (a, b, al = .55) => line(c, a[0], a[1], b[0], b[1], C.muted, 1.6, al);
+      for (let i = 0; i < cols; i++) {
+        const sa = i === VAC ? 1 - vac : 1;
+        if (i > 0) L(P.s1[i], P.g1[i - 1], .55 * sa); L(P.s1[i], P.g1[i], .55 * sa);
+        L(P.g1[i], P.g2[i]);
+        L(P.g2[i], P.s2[i]); if (i + 1 < cols) L(P.g2[i], P.s2[i + 1]);
+      }
+      for (let i = 0; i < cols; i++) {
+        const exposed = (i === VAC - 1 || i === VAC);
+        if (exposed && gaGlow > 0) glow(c, P.g1[i][0], P.g1[i][1], 20, C.teal, .55 * gaGlow);
+        dot(c, P.g1[i][0], P.g1[i][1], 7, C.blue, .9); dot(c, P.g2[i][0], P.g2[i][1], 7, C.blue, .9);
+        dot(c, P.s2[i][0], P.s2[i][1], 6, C.amber, .9);
+        if (i === VAC) {
+          dot(c, P.s1[i][0], P.s1[i][1], 6, C.amber, .9 * (1 - vac));
+          if (vac > 0) { c.setLineDash([3, 3]); dot(c, X(i), yS1, 8, null, vac, C.amber, 1.4); c.setLineDash([]); }
+        } else dot(c, P.s1[i][0], P.s1[i][1], 6, C.amber, .9);
+      }
+      return P;
+    }
+    function legend(c) {
+      dot(c, 22, 288, 5, C.blue, .9); text(c, "Ga", 31, 288, C.muted, 10);
+      dot(c, 56, 288, 5, C.amber, .9); text(c, "S", 65, 288, C.muted, 10);
+      dot(c, 84, 288, 5, C.teal, .9); text(c, "N", 93, 288, C.muted, 10);
+      dot(c, 112, 288, 4, C.paper, 1, C.ink); text(c, "H", 121, 288, C.muted, 10);
+    }
+    function bandBox(c, a, eUp, holeOn, recomb) {   // small band diagram, top right
+      const x0 = 318, y0 = 70, w = 104, h = 92;
+      rect(c, x0, y0, w, h, C.paper, .9 * a, C.rule);
+      line(c, x0 + 14, y0 + 24, x0 + w - 14, y0 + 24, C.ink, 2, a); text(c, "CB", x0 + w - 12, y0 + 16, C.muted, 10, "right", a);
+      line(c, x0 + 14, y0 + 72, x0 + w - 14, y0 + 72, C.ink, 2, a); text(c, "VB", x0 + w - 12, y0 + 82, C.muted, 10, "right", a);
+      text(c, "2.35 eV", x0 + 18, y0 + 48, C.muted, 10, "left", a);
+      const ey = lerp(y0 + 72, y0 + 24, eUp);
+      if (recomb > 0) { const yy = lerp(y0 + 24, y0 + 72, recomb); dot(c, x0 + 70, yy, 5, C.teal, a); }
+      else dot(c, x0 + 70, ey, 5, C.teal, a);
+      if (holeOn) dot(c, x0 + 70, y0 + 72, 5, C.paper, a, C.amber, 2);
+    }
+    return {
+      dur: END,
+      draw(c, t) {
+        const k = stageOf(t);
+        chips(c, k);
+        legend(c);
+        const amp = k === 1 ? 2.6 : .7;
+        const vac = prog(t, 9.8, 10.8), gaGlow = k >= 2 ? prog(t, 10.4, 11) : 0;
+        if (k === 0) {   // DFT: electron cloud converges over the sheet
+          const q = prog(t, .3, 3);
+          for (let i = 0; i < cols; i++) glow(c, X(i) + 21, (yG1 + yG2) / 2, lerp(60, 26, q), C.teal, lerp(.12, .32, q));
+        }
+        const P = sheet(c, t, amp, vac, gaGlow);
+        let cap = "";
+        if (k === 0) {
+          cap = "DFT: build a GaS sheet and compute its electrons";
+          text(c, "band gap 3.24 eV", 424, 82, C.ink, 12, "right", prog(t, 1.6, 2.2));
+          text(c, `step ${Math.min(14, Math.floor(prog(t, .2, 3) * 14) + 1)}`, 424, 100, C.muted, 11, "right");
+        } else if (k === 1) {
+          cap = "AIMD: shake it at room temperature, 300 K";
+          text(c, `${(prog(t, 3.6, 7.2) * 5).toFixed(1)} ps`, 424, 82, C.ink, 12, "right");
+          text(c, "sheet stays intact ✓", 424, 100, C.teal, 12, "right", prog(t, 5.5, 6.2));
+        } else if (k === 2) {
+          // N2 probes Ga site then S site, attention lines to surface atoms
+          const site = t < 8.6 ? 0 : 1, m = site ? ease(prog(t, 8.6, 9.1)) : 0;
+          const nx = lerp(P.g1[VAC - 1][0] + 4, X(VAC), m), ny = 140;
+          const targets = [P.s1[VAC - 1], P.s1[VAC], P.s1[VAC + 1], P.g1[VAC - 1], P.g1[VAC]];
+          if (t < 9.8) targets.forEach((p, i) => {
+            const d = Math.hypot(p[0] - nx, p[1] - ny), wgt = site ? 3.4 - d / 40 : 1.6 - d / 60;
+            line(c, nx, ny + 6, p[0], p[1], C.amber, Math.max(.6, wgt), .45 + .15 * Math.sin(t * 6 + i));
+          });
+          if (t < 9.8) {
+            dot(c, nx - 8, ny, 6.5, C.teal); dot(c, nx + 8, ny, 6.5, C.teal); line(c, nx - 3, ny - 2, nx + 3, ny - 2, C.paper, 1.4); line(c, nx - 3, ny + 2, nx + 3, ny + 2, C.paper, 1.4);
+            rect(c, 300, 70, 124, 46, C.paper, .9, C.rule);
+            text(c, "attention score", 310, 84, C.muted, 10);
+            text(c, site ? "over S: 3.26 % ↑" : "over Ga: 2.78 %", 310, 102, site ? C.teal : C.ink, 12, "left", 1, 600);
+          } else {
+            text(c, "remove one S", X(VAC), 160, C.amber, 12, "center", prog(t, 9.8, 10.3));
+            text(c, "→ exposed Ga atoms grab N₂", X(VAC), 176, C.teal, 12, "center", prog(t, 10.6, 11.1));
+          }
+          cap = t < 9.8 ? "GNN: an attention model finds where N₂ interacts most" : "So we make a sulfur vacancy (V-GaS)";
+        } else if (k === 3) {
+          cap = "Light: sunlight creates electrons in V-GaS";
+          photon(c, 120, 72, X(VAC) - 30, yS1 - 8, prog(t, 11.6, 12.5), C.amber, 1 - prog(t, 13, 13.6));
+          bandBox(c, prog(t, 11.8, 12.2), ease(prog(t, 12.5, 13.1)), t > 12.5, 0);
+          text(c, "photo-voltage U = 0.70 V", 424, 176, C.ink, 11, "right", prog(t, 13.2, 13.8));
+        } else if (k === 4) {
+          cap = t < 15.6 ? "NRR: N₂ lies flat in the vacancy" : t < 20 ? "Hydrogen adds one by one, every step downhill" : "Two NH₃ molecules leave";
+          // side-on N2 above the vacancy
+          const k0 = ease(prog(t, 14.8, 15.6)), bx = X(VAC), by = lerp(110, 176, k0);
+          const nA = [bx - 9, by], nB = [bx + 9, by];
+          const leave = (t0, p) => { const q = prog(t, t0, t0 + 1.3); return [p[0] + 50 * q, p[1] - 90 * q, 1 - q]; };
+          const B = t > 17.8 ? leave(17.8, nB) : [nB[0], nB[1], 1], A = t > 20 ? leave(20, nA) : [nA[0], nA[1], 1];
+          if (t < 17.8) { const o = t < 16.2 ? 3 : t < 16.8 ? 2 : 1; for (let q = 0; q < o; q++) { const s = (q - (o - 1) / 2) * 3.2; line(c, nA[0], nA[1] + s, nB[0], nB[1] + s, C.teal, 1.5); } }
+          if (k0 >= 1 && t < 20) { line(c, nA[0], nA[1], P.g1[VAC - 1][0], P.g1[VAC - 1][1], C.teal, 1.4, .6, [3, 3]); line(c, nB[0], nB[1], P.g1[VAC][0], P.g1[VAC][1], C.teal, 1.4, .6, [3, 3]); }
+          const H = [[16.2, "B", [8, -10]], [16.8, "B", [14, 2]], [17.4, "B", [2, -15]], [18.4, "A", [-8, -10]], [19, "A", [-14, 2]], [19.6, "A", [-2, -15]]];
+          H.forEach(([th, n, d]) => {
+            if (t < th - .5) return;
+            const base = n === "B" ? B : A; if (base[2] <= 0) return;
+            const q = ease(prog(t, th - .5, th)), x = lerp(40, base[0] + d[0], q), y = lerp(84, base[1] + d[1], q);
+            if (q >= 1) line(c, base[0], base[1], x, y, C.muted, 1.3, base[2]);
+            dot(c, x, y, 4, C.paper, base[2], C.ink);
+          });
+          dot(c, B[0], B[1], 6.5, C.teal, B[2]); dot(c, A[0], A[1], 6.5, C.teal, A[2]);
+          if (t > 17.8) text(c, "NH₃", B[0] + 12, B[1] - 10, C.ink, 12, "left", B[2]);
+          if (t > 20) text(c, "NH₃", A[0] + 12, A[1] - 10, C.ink, 12, "left", A[2]);
+          text(c, "H⁺ + e⁻", 40, 70, C.muted, 11, "center", fade(t, 15.4, 15.8, 19.8, 20.3));
+          text(c, "N₂", bx, by - 16, C.teal, 12, "center", 1 - prog(t, 15.6, 16));
+          // mini energy staircase going downhill
+          const steps = [0, -.2, -.5, -.6, -1.1, -1.3, -1.7], n = Math.min(6, Math.floor(prog(t, 15.4, 20.4) * 7));
+          const sx = 330, sy = 78;
+          text(c, "energy under light", 424, 68, C.muted, 10, "right");
+          for (let i = 0; i <= n; i++) line(c, sx + i * 14, sy + 20 - steps[i] * 30, sx + i * 14 + 10, sy + 20 - steps[i] * 30, C.teal, 2.4);
+          for (let i = 1; i <= n; i++) line(c, sx + i * 14 - 4, sy + 20 - steps[i - 1] * 30, sx + i * 14, sy + 20 - steps[i] * 30, C.teal, 1, .5, [2, 2]);
+        } else {
+          cap = "NAMD: the electron survives long enough to react";
+          const r = prog(t, 20.6, 24.6);
+          bandBox(c, 1, 1, true, prog(t, 24.2, 24.9));
+          text(c, "electron lifetime", 16, 84, C.muted, 11);
+          text(c, "V-GaS", 16, 104, C.teal, 12, "left", 1, 600);
+          rect(c, 70, 98, 160, 10, C.rule); rect(c, 70, 98, 160 * r, 10, C.teal);
+          text(c, `${(4.06 * r).toFixed(2)} ns`, 238, 104, C.teal, 12, "left", 1, 600);
+          text(c, "TiO₂", 16, 126, C.muted, 12);
+          rect(c, 70, 120, 160, 10, C.rule); rect(c, 70, 120, 1.5, 10, C.muted);
+          text(c, "~0.5 ps", 238, 126, C.muted, 12);
+          text(c, "about 8,000× longer", 70, 148, C.ink, 12, "left", prog(t, 23, 23.6));
+        }
+        caption(c, cap);
+        if (t > END - .7) rect(c, 0, 0, W, H, C.paper, prog(t, END - .7, END));
+      }
+    };
+  })();
 
   // ===================================================================
   // player: animates every <canvas data-anim> while it's on screen
