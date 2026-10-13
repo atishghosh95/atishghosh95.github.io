@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://atishghosh95.github.io/sitemap.xml
