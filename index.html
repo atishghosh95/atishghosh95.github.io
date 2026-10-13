@@ -21,6 +21,7 @@
       <a href="#research">Research</a>
       <a href="#experience">Experience</a>
       <a href="#publications">Publications</a>
+      <a href="explained.html">Explained</a>
       <a href="gallery.html">Gallery</a>
       <a href="#contact">Contact</a>
     </div>
@@ -43,7 +44,7 @@
         <ul class="links">
           <li><a href="mailto:atishghosh@umass.edu">Email</a></li>
           <li><a href="assets/Atish_Ghosh_CV.pdf">CV (PDF)</a></li>
-          <li><a href="https://scholar.google.com/citations?user=J8vRbFIAAAAJ&hl=en">Google Scholar</a></li>
+          <li><a href="#">Google Scholar</a></li>
           <li><a href="https://github.com/atishghosh95">GitHub</a></li>
           <li><a href="https://www.linkedin.com/in/atish-ghosh-63a387167/">LinkedIn</a></li>
           <li><a href="https://www.researchgate.net/profile/Atish-Ghosh-2">ResearchGate</a></li>
@@ -68,25 +69,32 @@
     <h2>Research</h2>
     <p class="intro">My work spans photovoltaics, photocatalysis, electrocatalysis, spintronics and metal-ion batteries, with a focus on low-dimensional and nanostructured materials. It has led to 27 peer-reviewed articles, with one more in press.</p>
 
-    <!-- EDIT: to add a theme, copy one <div class="theme"> ... </div> block -->
+    <!-- EDIT: to add a theme, copy one <div class="theme"> ... </div> block.
+         The <canvas data-anim="..."> line adds an animation; choose from:
+         dft, aimd, namd, hop, gnn, pv, water, nrr, electro, spin, battery, thermo, qd -->
     <div class="themes">
       <div class="theme">
+        <canvas class="anim" data-anim="namd" role="img" aria-label="Animation: Excited carriers and photocatalysis"></canvas>
         <h3>Excited carriers and photocatalysis</h3>
         <p>Non-adiabatic molecular dynamics of hot-carrier relaxation, charge transfer and recombination in van der Waals heterostructures, COFs and halide perovskites, and what they mean for solar water splitting and nitrogen fixation.</p>
       </div>
       <div class="theme">
+        <canvas class="anim" data-anim="gnn" role="img" aria-label="Animation: Machine-learned atomistic simulation"></canvas>
         <h3>Machine-learned atomistic simulation</h3>
         <p>Graph neural networks that make molecular dynamics fast enough to sample reactive interfaces, including E(q)C-GNN and GNN-accelerated studies of photocatalytic nitrogen reduction.</p>
       </div>
       <div class="theme">
+        <canvas class="anim" data-anim="electro" role="img" aria-label="Animation: Electrocatalysis and interfaces"></canvas>
         <h3>Electrocatalysis and interfaces</h3>
         <p>Adsorption energetics, defects and surface terminations at electrochemical interfaces, developed alongside experimental partners to guide the design of better electrocatalysts.</p>
       </div>
       <div class="theme">
+        <canvas class="anim" data-anim="battery" role="img" aria-label="Animation: Energy storage"></canvas>
         <h3>Energy storage</h3>
         <p>First-principles design of 2D electrode materials for Li- and Na-ion batteries and bifunctional catalysts for Li–air cells.</p>
       </div>
     </div>
+    <p class="more"><a href="explained.html">See my whole research career explained simply, with animations</a></p>
   </section>
 
   <!-- ============ EXPERIENCE & EDUCATION ============ -->
@@ -143,7 +151,7 @@
   <!-- ============ PUBLICATIONS ============ -->
   <section id="publications" class="wrap section">
     <h2>Publications</h2>
-    <p class="intro">My name is in bold. A full, up-to-date list is on <a href="https://scholar.google.com/citations?user=J8vRbFIAAAAJ&hl=en">Google Scholar</a>.</p>
+    <p class="intro">My name is in bold. A full, up-to-date list is on <a href="#">Google Scholar</a>.</p>
 
     <!--
       EDIT: to add a paper, copy this template into the right year:
@@ -227,5 +235,6 @@
 </footer>
 
 <script src="script.js"></script>
+<script src="anim.js"></script>
 </body>
 </html>

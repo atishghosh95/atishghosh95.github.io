@@ -9,6 +9,8 @@ A plain HTML/CSS site hosted free on GitHub Pages. No build tools needed.
 | `index.html` | All the text: name, research, experience, publications, contact | Yes, most edits happen here |
 | `style.css` | Colors, fonts, spacing | Only to change the look (colors are at the top) |
 | `script.js` | Draws the research animations in the header | Only to change their captions (search for EDIT) |
+| `explained.html` | "My research, explained simply" page with animations | Yes, to change text or add a chapter to the journey |
+| `anim.js` | Draws the research animations | No |
 | `gallery.html` | The photo gallery page | Yes, to add or remove photos |
 | `gallery.js` | Opens photos full-size when clicked | No |
 | `assets/gallery/` | Your gallery photos | Upload photos here |
@@ -32,6 +34,7 @@ A plain HTML/CSS site hosted free on GitHub Pages. No build tools needed.
   2. Open `gallery.html`, click the pencil, search for `HOW TO ADD A PHOTO`, copy the `<figure>` template, paste it inside `<div class="gallery">`, and type your file name and caption.
   3. Commit. Photos appear left to right in the order they are listed.
 - **Remove the sample photos:** delete their `<figure>` blocks in `gallery.html`, then delete `photo1.jpg` … `photo6.jpg` from `assets/gallery/`.
+- **Add or swap an animation:** any line like `<canvas class="anim" data-anim="dft"></canvas>` shows an animation. Change the word after `data-anim=` to one of: dft, aimd, namd, hop, gnn, pv, water, nrr, electro, spin, battery, thermo, qd.
 - **Change a link:** search for `EDIT: links`.
 - **Change colors:** edit the hex values at the top of `style.css`. The second block is for dark mode.
 - **Replace your photo:** upload a square image named `profile.jpg` into `assets/` (Add file → Upload files). It overwrites the old one.

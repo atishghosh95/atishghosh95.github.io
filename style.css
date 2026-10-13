@@ -214,3 +214,36 @@ p { margin: 0 0 .75rem; }
 .v-prev { left: 20px; top: 50%; transform: translateY(-50%); }
 .v-next { right: 20px; top: 50%; transform: translateY(-50%); }
 @media (max-width: 680px) { .v-prev, .v-next { top: auto; bottom: 24px; transform: none; } }
+
+/* =========================================================
+   RESEARCH ANIMATIONS (anim.js)
+   ========================================================= */
+canvas.anim {
+  display: block; width: 100%; aspect-ratio: 440 / 300;
+  background: var(--panel); border: 1px solid var(--rule); border-radius: 8px;
+}
+.theme canvas.anim { margin-bottom: 14px; }
+.theme { border-top: 0; padding-top: 0; }
+.more { margin-top: 2rem; font-weight: 500; }
+
+/* "Research explained" page */
+.ex-page .wrap { max-width: 1040px; }
+.ex-hero { padding: 64px 0 24px; }
+.ex-hero .lede { max-width: 36em; }
+.ex-group { padding-top: 56px; }
+.ex-group > h2 { margin-bottom: .4rem; }
+.ex-group > .intro { margin-bottom: 1.75rem; }
+.ex-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px 36px; }
+.ex-card h3 { font-size: 1.35rem; margin: 14px 0 .4rem; }
+.ex-card p { color: var(--ink); }
+.ex-card .mine { color: var(--muted); font-size: .92rem; border-left: 2px solid var(--teal); padding-left: 10px; }
+.journey { list-style: none; padding: 0; margin: 0; position: relative; }
+.journey::before { content: ""; position: absolute; left: 64px; top: 8px; bottom: 8px; width: 2px; background: var(--rule); }
+.journey li { display: grid; grid-template-columns: 52px 1fr; gap: 28px; padding: 10px 0; position: relative; }
+.journey li::before { content: ""; position: absolute; left: 59px; top: 18px; width: 12px; height: 12px; border-radius: 50%; background: var(--teal); }
+.journey .yr { color: var(--amber); font-variant-numeric: tabular-nums; font-weight: 600; padding-top: 2px; }
+.journey h3 { font-size: 1.1rem; margin-bottom: .2rem; }
+.journey p { color: var(--muted); margin: 0; font-size: .97rem; }
+@media (max-width: 760px) {
+  .ex-grid { grid-template-columns: 1fr; }
+}

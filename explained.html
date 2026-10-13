@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Research explained | Atish Ghosh</title>
+  <meta name="description" content="Atish Ghosh's research on clean-energy materials, explained simply with animations.">
+  <link rel="icon" href="assets/profile.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="ex-page">
+
+<header class="topbar">
+  <nav class="wrap nav">
+    <a class="nav-name" href="index.html">Atish Ghosh</a>
+    <div class="nav-links">
+      <a href="index.html#research">Research</a>
+      <a href="index.html#experience">Experience</a>
+      <a href="index.html#publications">Publications</a>
+      <a href="explained.html" aria-current="page">Explained</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<main class="wrap">
+
+  <section class="ex-hero">
+    <h1 class="page-title">My research, explained simply</h1>
+    <p class="lede">Everything around you, from your phone battery to the leaves on a tree, is made of atoms held together by electrons. I use computers and the laws of quantum physics to watch atoms and electrons move, so we can design better materials for clean energy. Here is what that means, one animation at a time.</p>
+  </section>
+
+  <!-- ============ CAREER JOURNEY ============ -->
+  <!-- EDIT: copy one <li> ... </li> block to add a new chapter -->
+  <section class="ex-group">
+    <h2>My journey so far</h2>
+    <ol class="journey">
+      <li><span class="yr">2019</span><div><h3>Starting out</h3><p>Began my Ph.D. with Prof. Pranab Sarkar at Visva-Bharati, India, learning to calculate how materials behave from first principles.</p></div></li>
+      <li><span class="yr">2021</span><div><h3>Spin and sunlight</h3><p>First papers: magnetic nanoribbons and monolayers for spintronics, and 2D hybrid perovskites for solar cells.</p></div></li>
+      <li><span class="yr">2022</span><div><h3>Batteries and electron dynamics</h3><p>Designed 2D electrode materials for lithium and sodium batteries, began simulating how electrons move after light hits a material, and co-wrote a review on catalysts for nitrogen fixation.</p></div></li>
+      <li><span class="yr">2024</span><div><h3>Light-driven chemistry</h3><p>Hot electrons in COFs and perovskites, water splitting, nitrogen fixation and thermoelectrics. Completed my Ph.D. in August 2024.</p></div></li>
+      <li><span class="yr">2025</span><div><h3>Wayne State University, Detroit</h3><p>Postdoc with Prof. Zhenfei Liu on quantum-dot gels and 2D perovskites. Our graph neural network for fast molecular dynamics, E(q)C-GNN, was published.</p></div></li>
+      <li><span class="yr">2026</span><div><h3>UMass Amherst</h3><p>Postdoc with Prof. Alexandra Zagalskaya, modelling the surfaces where electrocatalysis happens. Machine-learning study of nitrogen reduction published in ACS Catalysis.</p></div></li>
+    </ol>
+  </section>
+
+  <!-- ============ TOOLS ============ -->
+  <!--
+    EDIT: each animation is one <article class="ex-card"> block.
+    The data-anim="..." value picks the animation:
+    dft, aimd, namd, hop, gnn, pv, water, nrr, electro, spin, battery, thermo, qd
+  -->
+  <section class="ex-group">
+    <h2>The tools: how I watch atoms and electrons</h2>
+    <p class="intro">Atoms are far too small and fast to film, even with the best microscopes. So I simulate them on supercomputers.</p>
+    <div class="ex-grid">
+      <article class="ex-card">
+        <canvas class="anim" data-anim="dft" role="img" aria-label="Animation of density functional theory converging"></canvas>
+        <h3>Density functional theory (DFT)</h3>
+        <p>Electrons are too small to watch, so the computer works out where they must be. It makes a guess, checks it against the laws of quantum physics, improves it, and repeats until the answer stops changing. Then we know the material's energy, its colour, and whether it conducts electricity.</p>
+        <p class="mine">DFT is the starting point of almost every project I've worked on, using codes such as VASP and Quantum ESPRESSO.</p>
+      </article>
+      <article class="ex-card">
+        <canvas class="anim" data-anim="aimd" role="img" aria-label="Animation of atoms vibrating in molecular dynamics"></canvas>
+        <h3>Ab initio molecular dynamics (AIMD)</h3>
+        <p>Atoms never sit still; they wiggle with heat. AIMD calculates the push on every atom from its electrons, moves each atom a tiny step, and repeats thousands of times. The result is a movie of the material with frames a millionth of a billionth of a second (a femtosecond) apart.</p>
+        <p class="mine">I use AIMD to check that new materials stay stable at room temperature and to create training data for machine learning.</p>
+      </article>
+      <article class="ex-card">
+        <canvas class="anim" data-anim="namd" role="img" aria-label="Animation of an excited electron stepping down energy levels"></canvas>
+        <h3>Non-adiabatic molecular dynamics (NAMD)</h3>
+        <p>When light hits a material it kicks an electron up to a high energy. Like a ball bouncing down stairs, the electron loses energy step by step, and that energy shakes the atoms as heat. NAMD measures how fast this happens. If it's too fast, solar energy is wasted as heat before it can be used.</p>
+        <p class="mine">The core of my Ph.D.: hot electrons in COFs and lead-free perovskites, and charge transfer between stacked 2D layers.</p>
+      </article>
+      <article class="ex-card">
+        <canvas class="anim" data-anim="hop" role="img" aria-label="Animation of surface hopping between two energy surfaces"></canvas>
+        <h3>Surface hopping</h3>
+        <p>Think of two hilly landscapes stacked on top of each other: an excited one and a calm one. After light hits, the atoms roll around on the upper landscape. Where the two landscapes nearly touch, the system can hop down. Surface hopping simulates many such journeys to predict how a material relaxes after absorbing light.</p>
+        <p class="mine">I run these simulations with Hefei-NAMD using several surface-hopping methods.</p>
+      </article>
+      <article class="ex-card">
+        <canvas class="anim" data-anim="gnn" role="img" aria-label="Animation of a graph neural network passing messages between atoms"></canvas>
+        <h3>Machine learning with graph neural networks</h3>
+        <p>A graph neural network sees a material as a network: atoms are dots and bonds are lines. Atoms pass messages to their neighbours, and after a few rounds the network predicts energies and forces. Once trained on DFT results, it gives similar answers far faster, so we can simulate much bigger systems for much longer.</p>
+        <p class="mine">I co-developed E(q)C-GNN (J. Phys. Chem. Lett. 2025) and used it to speed up simulations of nitrogen reduction (ACS Catal. 2026).</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ APPLICATIONS ============ -->
+  <section class="ex-group">
+    <h2>What I use them for: clean-energy materials</h2>
+    <p class="intro">The same tools answer very different questions, from solar power to fertiliser to batteries.</p>
+    <div class="ex-grid">
+      <article class="ex-card">
+        <canvas class="anim" data-anim="pv" role="img" aria-label="Animation of a solar cell powering a bulb"></canvas>
+        <h3>Solar cells (photovoltaics)</h3>
+        <p>A solar cell turns light into electricity. Light knocks an electron loose, leaving a "hole" behind. The cell's layers push electrons one way and holes the other, so they flow through a wire and power a bulb.</p>
+        <p class="mine">2D hybrid perovskites for solar cells (J. Comput. Chem. 2021) and how defects affect lead-free tin perovskites (Nanoscale 2024).</p>
+      </article>
+      <article class="ex-card">
+        <canvas class="anim" data-anim="water" role="img" aria-label="Animation of sunlight splitting water into hydrogen and oxygen"></canvas>
+        <h3>Photocatalysis: fuel from sunlight and water</h3>
+        <p>This is like artificial photosynthesis. A thin sheet of material soaks up sunlight and uses the energy to split water into hydrogen fuel and oxygen. For every bubble of oxygen you get two of hydrogen.</p>
+        <p class="mine">Stacked 2D photocatalysts such as MoS₂/BSe and Ti₂CO₂–WSe₂, Z-scheme designs, and covalent organic frameworks for overall water splitting.</p>
+      </article>
+      <article class="ex-card">
+        <canvas class="anim" data-anim="nrr" role="img" aria-label="Animation of nitrogen turning into ammonia on a COF"></canvas>
+        <h3>Making fertiliser with sunlight (nitrogen reduction)</h3>
+        <p>Plants need ammonia, but making it today burns huge amounts of fossil fuel. Here, nitrogen from the air lands on a boron atom in a porous sheet called a COF. Powered by light, hydrogen atoms are added one by one until two ammonia molecules float away.</p>
+        <p class="mine">Boron-anchored aza-COF (J. Phys. Chem. Lett. 2024), defective boron nitride (J. Phys. Chem. Lett. 2025), and machine-learning-accelerated NRR (ACS Catal. 2026).</p>
+      </article>
+      <article class="ex-card">
+        <canvas class="anim" data-anim="electro" role="img" aria-label="Animation of water electrolysis with and without a catalyst"></canvas>
+        <h3>Electrocatalysis</h3>
+        <p>Electrocatalysis uses electricity, ideally from solar or wind, to drive chemical reactions such as splitting water. A good catalyst on the electrode makes the reaction faster and wastes less energy. I model what happens atom by atom at that surface to help design better catalysts.</p>
+        <p class="mine">My current work at UMass Amherst, including BiVO₄ surfaces for oxygen evolution with Lawrence Livermore National Laboratory (J. Chem. Phys., in press).</p>
+      </article>
+      <article class="ex-card">
+        <canvas class="anim" data-anim="battery" role="img" aria-label="Animation of lithium ions moving in a battery"></canvas>
+        <h3>Batteries</h3>
+        <p>In a lithium-ion battery, lithium ions shuttle between two electrodes. When you use your phone they travel one way and push electrons through the circuit; charging sends them back. More "parking spots" for ions means a battery that stores more energy.</p>
+        <p class="mine">A holey carbon nitride anode with ultrahigh capacity (ChemPhysChem 2022), porous boron phosphide for Li and Na ions (J. Phys. Chem. C 2022), and a C₂N catalyst for Li–air batteries (J. Mater. Chem. A 2025).</p>
+      </article>
+      <article class="ex-card">
+        <canvas class="anim" data-anim="spin" role="img" aria-label="Animation of spin-up electrons passing a half-metal"></canvas>
+        <h3>Spintronics</h3>
+        <p>Electrons spin like tiny magnets, pointing up or down. Ordinary electronics ignore this; spintronics uses it to store and send information with less power. Some materials act as a "half-metal": a one-way door that lets only one spin direction through.</p>
+        <p class="mine">My first papers: half-metallic vanadium nitride nanoribbons (PCCP 2021) and spin transport in CrC monolayers (Mater. Sci. Eng. B 2021).</p>
+      </article>
+      <article class="ex-card">
+        <canvas class="anim" data-anim="thermo" role="img" aria-label="Animation of a thermoelectric material making voltage from heat"></canvas>
+        <h3>Thermoelectrics: electricity from heat</h3>
+        <p>Thermoelectric materials turn heat straight into electricity. Heat one end and charges drift toward the cold end, creating a voltage, with no moving parts. They could recover energy wasted as heat in car engines and factories.</p>
+        <p class="mine">Why the Zintl-phase compound KCaBi is so good at this (PCCP 2024).</p>
+      </article>
+      <article class="ex-card">
+        <canvas class="anim" data-anim="qd" role="img" aria-label="Animation of a quantum dot handing energy to a dye"></canvas>
+        <h3>Quantum dots and energy transfer</h3>
+        <p>Quantum dots are crystals only a few nanometres wide, thousands of times thinner than a hair. They catch light and can pass its energy to a nearby dye molecule, like a relay race. Knowing how fast that hand-off happens helps build better light-harvesting devices and lighting.</p>
+        <p class="mine">At Wayne State: quantum-dot gel to dye energy transfer (J. Phys. Chem. Lett. 2026) and excited carriers in 2D perovskites (Nano Lett. and ACS Nano 2026).</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="ex-group">
+    <p class="more"><a href="index.html#publications">See the full list of publications</a></p>
+  </section>
+</main>
+
+<footer class="wrap footer">
+  <p>© 2026 Atish Ghosh</p>
+  <p class="footer-links">
+    <a href="https://www.linkedin.com/in/atish-ghosh-63a387167/">LinkedIn</a>
+    <a href="https://www.researchgate.net/profile/Atish-Ghosh-2">ResearchGate</a>
+    <a href="https://www.instagram.com/atishg95/">Instagram</a>
+  </p>
+</footer>
+
+<script src="anim.js"></script>
+</body>
+</html>
