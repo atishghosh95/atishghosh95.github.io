@@ -8,11 +8,12 @@ A plain HTML/CSS site hosted free on GitHub Pages. No build tools needed.
 |---|---|---|
 | `index.html` | All the text: name, research, experience, publications, contact | Yes, most edits happen here |
 | `style.css` | Colors, fonts, spacing | Only to change the look (colors are at the top) |
-| `script.js` | Draws the lattice animation in the header | No |
+| `script.js` | Draws the research animations in the header | Only to change their captions (search for EDIT) |
 | `gallery.html` | The photo gallery page | Yes, to add or remove photos |
 | `gallery.js` | Opens photos full-size when clicked | No |
 | `assets/gallery/` | Your gallery photos | Upload photos here |
-| `assets/profile.png` | Your photo | Replace with your own |
+| `assets/profile.jpg` | Your photo | Upload a new square photo with the same name to change it |
+| `assets/profile.png` | Small icon shown in the browser tab | No |
 | `assets/Atish_Ghosh_CV.pdf` | Your CV, linked from the header | Upload it here |
 
 ## Making changes on github.com (no software needed)
@@ -33,7 +34,7 @@ A plain HTML/CSS site hosted free on GitHub Pages. No build tools needed.
 - **Remove the sample photos:** delete their `<figure>` blocks in `gallery.html`, then delete `photo1.jpg` … `photo6.jpg` from `assets/gallery/`.
 - **Change a link:** search for `EDIT: links`.
 - **Change colors:** edit the hex values at the top of `style.css`. The second block is for dark mode.
-- **Replace your photo:** upload a square image named `profile.png` into `assets/` (Add file → Upload files). It overwrites the old one.
+- **Replace your photo:** upload a square image named `profile.jpg` into `assets/` (Add file → Upload files). It overwrites the old one.
 
 ## Tips
 
