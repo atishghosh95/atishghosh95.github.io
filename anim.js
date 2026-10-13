@@ -3,7 +3,7 @@
 // "Research explained" page. Any <canvas class="anim" data-anim="NAME">
 // on a page is animated automatically, where NAME is one of:
 //   dft, aimd, namd, hop, gnn, pv, water, nrr, electro, spin,
-//   battery, thermo, qd, gas (flagship GaS NRR story)
+//   battery, thermo, qd, gas (flagship GaS NRR story), eqc (E(q)C-GNN story)
 // To add an animation to a page, copy one such <canvas> line.
 // You don't need to edit this file.
 // =====================================================================
@@ -113,67 +113,191 @@
   // ===================================================================
   const S = {};
 
-  // ---------- DFT: the guess-check-improve loop ----------
-  S.dft = {
-    dur: 7.5,
-    draw(c, t) {
-      const n = Math.min(12, Math.floor(prog(t, .4, 5.2) * 12));
-      const k = n / 12;
-      const atoms = [[95, 170, 12, C.rose], [160, 120, 9, C.blue], [160, 220, 9, C.blue], [225, 170, 12, C.rose]];
-      const bonds = [[0, 1], [0, 2], [1, 3], [2, 3]];
-      // electron cloud: blurry first guess sharpens into atoms and bonds
-      const spread = lerp(70, 26, ease(k));
-      atoms.forEach(a => glow(c, a[0], a[1], spread, C.teal, lerp(.18, .5, k)));
-      bonds.forEach(([i, j]) => {
-        const mx = (atoms[i][0] + atoms[j][0]) / 2, my = (atoms[i][1] + atoms[j][1]) / 2;
-        glow(c, mx, my, lerp(55, 20, ease(k)), C.teal, lerp(.05, .55, k));
-      });
-      bonds.forEach(([i, j]) => line(c, atoms[i][0], atoms[i][1], atoms[j][0], atoms[j][1], C.muted, 1.5, .5));
-      atoms.forEach(a => dot(c, a[0], a[1], a[2], a[3]));
-      text(c, "electron cloud", 160, 268, C.teal, 11, "center");
-      // the loop
-      const words = ["guess", "solve", "improve"], cur = Math.floor(t / .42) % 3;
-      words.forEach((w, i) => text(c, w, 26 + i * 70, 48, i === cur && n < 12 ? C.amber : C.muted, 12, "left", 1, i === cur && n < 12 ? 600 : 500));
-      text(c, "→", 74, 48, C.muted, 12); text(c, "→", 144, 48, C.muted, 12);
-      // energy plot
-      const X0 = 290, X1 = 420, Y0 = 80, Y1 = 230;
-      line(c, X0, Y1, X1, Y1, C.muted, 1); line(c, X0, Y1, X0, Y0 - 10, C.muted, 1);
-      text(c, "energy", X0 + 4, Y0 - 16, C.muted, 11); text(c, "attempt", X1, Y1 + 14, C.muted, 11, "right");
-      const E = i => 1 - Math.exp(-i / 2.4) + .35 * Math.cos(i * 2.1) * Math.exp(-i / 1.8);
-      const px = i => lerp(X0 + 8, X1 - 4, i / 12), py = e => lerp(Y0, Y1 - 10, e / 1.25);
-      const pts = []; for (let i = 0; i <= n; i++) pts.push([px(i), py(E(i))]);
-      if (pts.length > 1) poly(c, pts, C.amber, 1.6);
-      pts.forEach(p => dot(c, p[0], p[1], 3, C.amber));
-      caption(c, n < 12 ? `Step ${n + 1}: the computer refines its guess` : "Converged: the answer stopped changing ✓");
-    }
-  };
+  // shared: a row of stage chips under the caption
+  function chipRow(c, names, k) {
+    let x = 16;
+    names.forEach((s, i) => {
+      c.font = '600 11px "Public Sans", Arial, sans-serif';
+      const w = c.measureText(s).width + 16, on = i === k, done = i < k;
+      c.globalAlpha = 1; c.fillStyle = on ? C.ink : "transparent"; c.strokeStyle = on ? C.ink : C.rule; c.lineWidth = 1;
+      c.beginPath(); c.roundRect ? c.roundRect(x, 36, w, 20, 10) : c.rect(x, 36, w, 20); c.fill(); c.stroke();
+      text(c, s, x + w / 2, 46.5, on ? C.paper : done ? C.teal : C.muted, 11, "center", 1, 600);
+      x += w + 5;
+    });
+  }
 
-  // ---------- AIMD: atoms jiggle, forces move them ----------
-  S.aimd = {
-    dur: 12,
-    draw(c, t) {
-      const cols = 6, rows = 3, sp = 58, x0 = 75, y0 = 110;
-      const pos = [];
-      for (let r = 0; r < rows; r++) for (let q = 0; q < cols; q++) {
-        const i = r * cols + q, w1 = 3 + (i * 7 % 5) * .5, w2 = 3.4 + (i * 3 % 4) * .6;
-        pos.push([x0 + q * sp + (r % 2) * sp / 2 + 6 * Math.sin(w1 * t + i), y0 + r * sp * .86 + 6 * Math.sin(w2 * t + i * 1.9)]);
-      }
-      const eq = i => [x0 + (i % cols) * sp + (Math.floor(i / cols) % 2) * sp / 2, y0 + Math.floor(i / cols) * sp * .86];
-      for (let i = 0; i < pos.length; i++) for (let j = i + 1; j < pos.length; j++) {
-        const a = eq(i), b = eq(j);
-        if (Math.hypot(a[0] - b[0], a[1] - b[1]) < sp + 2) line(c, pos[i][0], pos[i][1], pos[j][0], pos[j][1], C.muted, 1.6, .5);
-      }
-      pos.forEach((p, i) => dot(c, p[0], p[1], 9, i === 8 ? C.rose : C.blue, i === 8 ? 1 : .85));
-      // force arrow on the highlighted atom (pulls it back toward its resting place)
-      const a = pos[8], e = eq(8), fx = (e[0] - a[0]) * 4, fy = (e[1] - a[1]) * 4;
-      if (Math.hypot(fx, fy) > 6) arrow(c, a[0], a[1], a[0] + fx, a[1] + fy, C.amber, 2);
-      text(c, "force", a[0] + fx + 6, a[1] + fy - 8, C.amber, 11);
-      const fs = Math.floor(t * 50) * 2;
-      text(c, `time: ${fs} fs`, 424, 274, C.ink, 12, "right");
-      text(c, "temperature: 300 K", 16, 274, C.muted, 12);
-      caption(c, "Each step: compute forces from electrons, then move every atom");
+  // ---------- DFT on a real system: the holey C2N monolayer ----------
+  S.dft = (() => {
+    const r = 11, d = 3.464 * r, cx0 = 40, cy0 = 70;
+    const atoms = [], bonds = [];
+    const a1 = [1.5 * d, Math.sqrt(3) / 2 * d], a2 = [1.5 * d, -Math.sqrt(3) / 2 * d];
+    const inBox = (x, y) => x > 8 && x < 274 && y > 72 && y < 274;
+    const add = (x, y, el) => { if (inBox(x, y) && !atoms.some(a => Math.hypot(a[0] - x, a[1] - y) < 2)) atoms.push([x, y, el]); };
+    for (let m = -6; m <= 6; m++) for (let n = -6; n <= 6; n++) {
+      const A = [cx0 + m * a1[0] + n * a2[0], cy0 + 110 + m * a1[1] + n * a2[1]];
+      [[A, [0, 120, 240]], [[A[0] + d, A[1]], [180, 300, 60]]].forEach(([P, dirs]) => {
+        for (let k = 0; k < 6; k++) { const an = (30 + 60 * k) * Math.PI / 180; add(P[0] + r * Math.cos(an), P[1] + r * Math.sin(an), "C"); }
+        dirs.forEach(deg => {
+          const u = [Math.cos(deg * Math.PI / 180), Math.sin(deg * Math.PI / 180)], Q = [P[0] + 1.732 * r * u[0], P[1] + 1.732 * r * u[1]];
+          add(Q[0] - r * u[1], Q[1] + r * u[0], "N"); add(Q[0] + r * u[1], Q[1] - r * u[0], "N");
+        });
+      });
     }
-  };
+    for (let i = 0; i < atoms.length; i++) for (let j = i + 1; j < atoms.length; j++)
+      if (Math.hypot(atoms[i][0] - atoms[j][0], atoms[i][1] - atoms[j][1]) < r * 1.08) bonds.push([i, j]);
+    return {
+      dur: 8,
+      draw(c, t) {
+        const n = Math.min(12, Math.floor(prog(t, .4, 5.2) * 12)), k = n / 12;
+        const spread = lerp(34, 13, ease(k));
+        atoms.forEach(a => glow(c, a[0], a[1], spread, C.teal, lerp(.05, .22, k)));
+        bonds.forEach(([i, j]) => line(c, atoms[i][0], atoms[i][1], atoms[j][0], atoms[j][1], C.muted, 1.5, .6));
+        atoms.forEach(a => dot(c, a[0], a[1], a[2] === "N" ? 4.2 : 3.6, a[2] === "N" ? C.blue : C.muted, .95));
+        text(c, "C₂N monolayer (top view)", 140, 292, C.muted, 11, "center");
+        const words = ["guess", "solve", "improve"], cur = Math.floor(t / .42) % 3;
+        words.forEach((w, i) => text(c, w, 16 + i * 66, 48, i === cur && n < 12 ? C.amber : C.muted, 12, "left", 1, i === cur && n < 12 ? 600 : 500));
+        text(c, "→", 60, 48, C.muted, 12); text(c, "→", 126, 48, C.muted, 12);
+        // right panel: convergence, then results
+        const X0 = 296, X1 = 424, Y0 = 82, Y1 = 186;
+        line(c, X0, Y1, X1, Y1, C.muted, 1); line(c, X0, Y1, X0, Y0 - 8, C.muted, 1);
+        text(c, "energy", X0 + 4, Y0 - 14, C.muted, 11); text(c, "attempt", X1, Y1 + 12, C.muted, 11, "right");
+        const E = i => 1 - Math.exp(-i / 2.4) + .35 * Math.cos(i * 2.1) * Math.exp(-i / 1.8);
+        const pts = []; for (let i = 0; i <= n; i++) pts.push([lerp(X0 + 8, X1 - 4, i / 12), lerp(Y0, Y1 - 8, E(i) / 1.25)]);
+        if (pts.length > 1) poly(c, pts, C.amber, 1.6); pts.forEach(p => dot(c, p[0], p[1], 2.8, C.amber));
+        const out = ["structure ✓", "charge density ✓", "band gap ✓", "where Li/O₂ bind ✓"];
+        out.forEach((s, i) => text(c, s, X0, 214 + i * 18, C.ink, 12, "left", prog(t, 5.3 + i * .35, 5.7 + i * .35)));
+        caption(c, n < 12 ? `DFT step ${n + 1}: solving for C₂N's electrons` : "Converged: now we know how C₂N behaves");
+      }
+    };
+  })();
+
+  // ---------- AIMD on a real system: g-CN / WTe2 heterostructure ----------
+  S.aimd = (() => {
+    const N = 16, sx = 26, x0 = 18;
+    const rows = [  // y, element, colour key, x offset
+      [104, "cn", 0], [150, "Te", 13], [170, "W", 0], [190, "Te", 13]];
+    return {
+      dur: 10,
+      draw(c, t) {
+        const pos = rows.map(([y, el, off], ri) => Array.from({ length: N }, (_, i) => {
+          const a = el === "cn" ? 4.5 : 3, ph = i * 1.9 + ri * 2.7;
+          return [x0 + i * sx + off + a * Math.sin(t * (6 + (i % 3)) + ph), y + a * 1.1 * Math.cos(t * (7 + (i % 4)) + ph * 1.3), el, i];
+        }));
+        // bonds
+        for (let i = 0; i + 1 < N; i++) line(c, pos[0][i][0], pos[0][i][1], pos[0][i + 1][0], pos[0][i + 1][1], C.muted, 1.6, .6);
+        for (let i = 0; i < N; i++) {
+          [pos[1], pos[3]].forEach(row => {
+            line(c, pos[2][i][0], pos[2][i][1], row[i][0], row[i][1], C.muted, 1.4, .5);
+            if (i + 1 < N) line(c, pos[2][i + 1][0], pos[2][i + 1][1], row[i][0], row[i][1], C.muted, 1.4, .5);
+          });
+        }
+        pos[0].forEach(p => dot(c, p[0], p[1], 6, p[3] % 3 === 1 ? C.muted : C.blue, .95));
+        pos[1].concat(pos[3]).forEach(p => dot(c, p[0], p[1], 6.5, C.amber, .9));
+        pos[2].forEach(p => dot(c, p[0], p[1], 7.5, C.rose, .9));
+        text(c, "g-CN layer", 16, 80, C.ink, 12); text(c, "WTe₂ layer", 16, 216, C.ink, 12);
+        line(c, 300, 114, 300, 140, C.muted, 1, .8, [2, 3]); text(c, "van der Waals gap", 306, 127, C.muted, 10);
+        // force arrow on one g-CN atom
+        const p = pos[0][7], fx = (x0 + 7 * sx - p[0]) * 5, fy = (104 - p[1]) * 5;
+        if (Math.hypot(fx, fy) > 6) arrow(c, p[0], p[1], p[0] + fx, p[1] + fy, C.teal, 2);
+        // energy trace
+        const X0 = 30, X1 = 300, Y0 = 236, Y1 = 280, ps = 5 * prog(t, 0, 9.4);
+        line(c, X0, Y1, X1, Y1, C.muted, 1); line(c, X0, Y1, X0, Y0, C.muted, 1);
+        text(c, "energy", X0 + 4, Y0 - 6, C.muted, 10); text(c, "time (ps)", X1, Y1 + 11, C.muted, 10, "right");
+        const pts = [];
+        for (let k = 0; k <= 160 * ps / 5; k++) { const s = k / 160, e = Math.exp(-s * 25) * .8 + .12 * Math.sin(k * 1.7) * Math.sin(k * .31) + .05 * Math.sin(k * 3.3); pts.push([lerp(X0, X1, s), lerp(Y0 + 22, Y0 + 6, -e) ]); }
+        if (pts.length > 1) poly(c, pts, C.amber, 1.4);
+        text(c, `${ps.toFixed(2)} ps`, 424, 246, C.ink, 13, "right", 1, 600);
+        text(c, "300 K", 424, 266, C.muted, 12, "right");
+        text(c, "stays intact ✓", 424, 286, C.teal, 12, "right", prog(t, 7, 7.6));
+        caption(c, "AIMD: every atom moves under forces from DFT, 1 fs at a time");
+      }
+    };
+  })();
+
+  // ---------- E(q)C-GNN story (J. Phys. Chem. Lett. 2025) ----------
+  S.eqc = (() => {
+    const names = ["AIMD data", "Graph", "Messages", "Predict", "Speed"];
+    const ST = [0, 3.8, 7.4, 11.2, 15.2], END = 19.5;
+    const R = 34, cx = 150, cy = 172;
+    const nodes = [], edges = [];
+    for (let k = 0; k < 6; k++) nodes.push([Math.cos(k * Math.PI / 3 + Math.PI / 6) * R, Math.sin(k * Math.PI / 3 + Math.PI / 6) * R, k % 2]);
+    for (let k = 0; k < 6; k++) { const a = k * Math.PI / 3 + Math.PI / 6; nodes.push([Math.cos(a) * R * 2, Math.sin(a) * R * 2, (k + 1) % 2]); }
+    for (let k = 0; k < 6; k++) { edges.push([k, (k + 1) % 6]); edges.push([k, k + 6]); }
+    for (let k = 0; k < 6; k++) { const a = k * Math.PI / 3 + Math.PI / 6 + Math.PI / 6; nodes.push([Math.cos(a) * R * 2.3, Math.sin(a) * R * 2.3, k % 2]); edges.push([6 + k, 12 + k]); edges.push([6 + (k + 1) % 6, 12 + k]); }
+    const stage = t => { let k = 0; ST.forEach((s, i) => { if (t >= s) k = i; }); return k; };
+    return {
+      dur: END,
+      draw(c, t) {
+        const k = stage(t); chipRow(c, names, k);
+        let cap = "";
+        if (k === 0) {
+          cap = "Step 1: run expensive AIMD on g-CN/WTe₂ at 300 K";
+          for (let i = 0; i < 14; i++) {
+            const j = Math.sin(t * 7 + i) * 3;
+            dot(c, 28 + i * 22, 118 + j, 5.5, i % 3 === 1 ? C.muted : C.blue, .95);
+            if (i) line(c, 28 + (i - 1) * 22, 118 + Math.sin(t * 7 + i - 1) * 3, 28 + i * 22, 118 + j, C.muted, 1.4, .6);
+            dot(c, 34 + i * 22, 168 + Math.cos(t * 6 + i) * 2.5, 6.5, C.rose, .9);
+            dot(c, 23 + i * 22, 152 + Math.sin(t * 5 + i * 2) * 2, 5, C.amber, .85); dot(c, 23 + i * 22, 184 + Math.cos(t * 5 + i * 2) * 2, 5, C.amber, .85);
+          }
+          text(c, "g-CN", 16, 96, C.ink, 11); text(c, "WTe₂", 16, 206, C.ink, 11);
+          const nf = Math.floor(prog(t, .3, 3.4) * 8);
+          text(c, "snapshots saved", 424, 230, C.muted, 11, "right");
+          for (let f = 0; f < nf; f++) rect(c, 330 + f * 11, 244 - f * 2, 56, 36, C.panel || C.paper, 1, C.muted);
+          text(c, `${(5 * prog(t, .3, 3.4)).toFixed(1)} ps of trajectory`, 16, 280, C.ink, 12, "left", 1, 600);
+        } else {
+          const rot = k === 2 ? ease(prog(t, 8.6, 10.6)) * Math.PI / 3 : k > 2 ? Math.PI / 3 : 0;
+          const sc = k >= 3 ? .62 : 1, ox = k >= 3 ? 80 : cx, oy = k >= 3 ? 180 : cy;
+          const P = nodes.map(n => [ox + sc * (n[0] * Math.cos(rot) - n[1] * Math.sin(rot)), oy + sc * (n[0] * Math.sin(rot) + n[1] * Math.cos(rot)), n[2]]);
+          const appear = k === 1 ? prog(t, 3.8, 5) : 1;
+          edges.forEach(([i, j], q) => line(c, P[i][0], P[i][1], P[j][0], P[j][1], C.muted, 1.8, .6 * clamp(appear * 1.5 - q / edges.length, 0, 1)));
+          if (k === 2) {
+            const ph = (t * 1.1) % 1;
+            edges.forEach(([i, j]) => { dot(c, lerp(P[i][0], P[j][0], ph), lerp(P[i][1], P[j][1], ph), 3, C.amber, .9); dot(c, lerp(P[j][0], P[i][0], ph), lerp(P[j][1], P[i][1], ph), 3, C.amber, .9); });
+          }
+          P.forEach(p => { if (k === 2) glow(c, p[0], p[1], 16, C.teal, .3); dot(c, p[0], p[1], 7 * sc + 1, p[2] ? C.muted : C.blue, appear); });
+          if (k === 1) {
+            const p0 = P[6];
+            text(c, "(x, y, z)", p0[0] + 12, p0[1] - 2, C.teal, 12, "left", prog(t, 5.2, 5.7), 600);
+            text(c, "atoms → nodes, bonds → edges", 424, 90, C.ink, 12, "right", prog(t, 4.6, 5.2));
+            text(c, "input: only atom coordinates", 424, 110, C.teal, 12, "right", prog(t, 5.4, 6));
+            cap = "Step 2: turn every snapshot into a graph";
+          }
+          if (k === 2) {
+            rect(c, 296, 96, 128, 58, C.paper, .95, C.rule);
+            text(c, "predicted energy", 306, 112, C.muted, 11);
+            rect(c, 306, 128, 104, 9, C.teal, .9);
+            text(c, t > 8.6 ? "rotated → same answer ✓" : "", 424, 172, C.teal, 11, "right", prog(t, 9.4, 10));
+            cap = t < 8.6 ? "Step 3: atoms pass messages to neighbours" : "Equivariant: rotating the material doesn't fool it";
+          }
+          if (k === 3) {
+            cap = "Step 4: predictions match AIMD within ±3%";
+            const X0 = 160, X1 = 424, Y0 = 82, Y1 = 196, s = prog(t, 11.4, 14);
+            line(c, X0, Y1, X1, Y1, C.muted, 1); line(c, X0, Y1, X0, Y0, C.muted, 1);
+            text(c, "energy", X0 + 4, Y0 - 6, C.muted, 10); text(c, "time", X1, Y1 + 11, C.muted, 10, "right");
+            const f = q => .5 + .18 * Math.sin(q * 23) * Math.sin(q * 5.1) + .08 * Math.sin(q * 61);
+            const a = [], g = [];
+            for (let q = 0; q <= 120 * s; q++) { const u = q / 120; a.push([lerp(X0, X1, u), lerp(Y1, Y0, f(u))]); g.push([lerp(X0, X1, u), lerp(Y1, Y0, f(u) + .025 * Math.sin(q * 1.3))]); }
+            if (a.length > 1) { poly(c, a, C.muted, 2.2, .8); c.setLineDash([4, 3]); poly(c, g, C.teal, 1.8); c.setLineDash([]); }
+            line(c, X0 + 8, 214, X0 + 26, 214, C.muted, 2.2); text(c, "AIMD", X0 + 32, 214, C.muted, 11);
+            line(c, X0 + 80, 214, X0 + 98, 214, C.teal, 1.8, 1, [4, 3]); text(c, "E(q)C-GNN", X0 + 104, 214, C.teal, 11);
+            ["potential energy", "kinetic energy", "entropy", "force variation"].forEach((w, i) => text(c, w + " ✓", X0 + (i % 2) * 140, 240 + Math.floor(i / 2) * 20, C.ink, 12, "left", prog(t, 12.6 + i * .4, 13 + i * .4)));
+          }
+          if (k === 4) {
+            cap = "Step 5: several orders of magnitude faster";
+            const s = prog(t, 15.4, 18.6);
+            text(c, "AIMD (DFT every step)", 160, 108, C.muted, 12);
+            rect(c, 160, 118, 250, 12, C.rule); rect(c, 160, 118, 250 * s * .01, 12, C.muted);
+            text(c, "E(q)C-GNN", 160, 152, C.teal, 12, "left", 1, 600);
+            rect(c, 160, 162, 250, 12, C.rule); rect(c, 160, 162, 250 * Math.min(1, s * 4), 12, C.teal);
+            text(c, "trained and run on a single desktop CPU", 160, 200, C.ink, 12, "left", prog(t, 16.4, 17));
+            text(c, "→ longer simulations, bigger systems", 160, 220, C.teal, 12, "left", prog(t, 17, 17.6));
+          }
+        }
+        caption(c, cap);
+        if (t > END - .6) rect(c, 0, 0, W, H, C.paper, prog(t, END - .6, END));
+      }
+    };
+  })();
 
   // ---------- NAMD: an excited electron walks down an energy staircase ----------
   S.namd = {
@@ -699,6 +823,21 @@
       }
     };
   })();
+
+  // ---------- one-line animated career journey (explained.html) ----------
+  document.querySelectorAll(".jline").forEach(box => {
+    const stops = Array.from(box.querySelectorAll("li")), out = box.querySelector(".jline-text"), fill = box.querySelector(".jline-fill");
+    let cur = 0, timer = null;
+    function show(i) {
+      cur = i;
+      stops.forEach((s, k) => { s.classList.toggle("on", k === i); s.classList.toggle("past", k < i); });
+      fill.style.width = (i / (stops.length - 1) * 100) + "%";
+      out.innerHTML = "<strong>" + stops[i].dataset.year + ": " + stops[i].dataset.title + ".</strong> " + stops[i].dataset.text;
+    }
+    function play() { clearInterval(timer); if (!reduce) timer = setInterval(() => show((cur + 1) % stops.length), 3800); }
+    stops.forEach((s, i) => s.querySelector("button").addEventListener("click", () => { show(i); play(); }));
+    show(0); play();
+  });
 
   // ===================================================================
   // player: animates every <canvas data-anim> while it's on screen
