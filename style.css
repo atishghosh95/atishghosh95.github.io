@@ -12,6 +12,9 @@
   --serif: "Newsreader", Georgia, "Times New Roman", serif;
   --sans: "Public Sans", "Helvetica Neue", Arial, sans-serif;
   --width: 860px;        /* max width of the content column */
+  --panel: rgba(255,255,255,.72); /* background of the animation box */
+  --blue: #2f5fbf;       /* nitrogen atoms in the animation */
+  --rose: #c2417a;       /* boron atom in the animation */
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -21,6 +24,9 @@
     --teal: #3fd3c0;
     --amber: #f2a33a;
     --rule: #24314a;
+    --panel: rgba(16,26,46,.78);
+    --blue: #7ea4ff;
+    --rose: #f07aaa;
   }
 }
 
@@ -62,24 +68,42 @@ p { margin: 0 0 .75rem; }
 /* ---------- hero ---------- */
 .hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--rule); }
 #lattice {
-  position: absolute; inset: 0; width: 100%; height: 100%;
-  -webkit-mask-image: linear-gradient(90deg, transparent 40%, #000 85%);
-          mask-image: linear-gradient(90deg, transparent 40%, #000 85%);
+  position: absolute; inset: 0; width: 100%; height: 100%; opacity: .7;
+  -webkit-mask-image: linear-gradient(90deg, transparent 15%, #000 70%);
+          mask-image: linear-gradient(90deg, transparent 15%, #000 70%);
 }
+.hero .wrap, .topbar .wrap { max-width: 1140px; }
 .hero-inner {
   position: relative;
-  display: grid; grid-template-columns: 168px 1fr; gap: 40px; align-items: start;
-  padding-top: 88px; padding-bottom: 88px;
+  display: grid; grid-template-columns: 1fr 440px; gap: 56px; align-items: center;
+  padding-top: 64px; padding-bottom: 64px;
 }
 .portrait {
-  width: 168px; height: 168px; border-radius: 50%; object-fit: cover;
-  border: 3px solid var(--paper); box-shadow: 0 0 0 1px var(--rule);
+  display: block; width: 132px; height: 132px; border-radius: 50%; object-fit: cover;
+  border: 3px solid var(--paper); box-shadow: 0 0 0 1px var(--rule); margin-bottom: 22px;
 }
 .hero h1 { font-size: clamp(2.6rem, 6vw, 4rem); font-weight: 500; letter-spacing: -.01em; }
 .role { color: var(--muted); margin: .5rem 0 1.25rem; }
 .lede { font-family: var(--serif); font-size: 1.3rem; line-height: 1.5; max-width: 30em; }
 .links { list-style: none; padding: 0; margin: 1.5rem 0 0; display: flex; flex-wrap: wrap; gap: 8px 20px; }
 .links a { font-weight: 500; }
+
+/* animated research scenes on the right of the header */
+.stage {
+  margin: 0; background: var(--panel); border: 1px solid var(--rule); border-radius: 10px;
+  padding: 14px 16px 16px;
+}
+.stage-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.stage-tabs button {
+  font: 500 .82rem/1 var(--sans); color: var(--muted); background: transparent;
+  border: 1px solid var(--rule); border-radius: 999px; padding: 7px 11px; cursor: pointer; white-space: nowrap;
+}
+.stage-tabs button[aria-pressed="true"] { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+.stage-tabs button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+#scene { display: block; width: 100%; aspect-ratio: 440 / 320; }
+.stage figcaption { min-height: 4.6em; margin-top: 6px; }
+#scene-title { display: block; font-family: var(--serif); font-size: 1.12rem; font-weight: 500; }
+#scene-text { display: block; color: var(--muted); font-size: .9rem; line-height: 1.5; margin-top: 2px; }
 
 /* ---------- sections ---------- */
 .section { padding-top: 72px; padding-bottom: 8px; }
@@ -130,17 +154,19 @@ p { margin: 0 0 .75rem; }
 /* ---------- phones ---------- */
 @media (max-width: 680px) {
   .nav-links { display: none; }
-  .hero-inner { grid-template-columns: 1fr; gap: 24px; padding-top: 48px; padding-bottom: 56px; }
-  .portrait { width: 120px; height: 120px; }
+  .portrait { width: 112px; height: 112px; }
+  .stage { padding: 12px; }
+  .stage-tabs button { padding: 7px 9px; font-size: .78rem; }
   #lattice { opacity: .35; -webkit-mask-image: none; mask-image: none; }
   .themes { grid-template-columns: 1fr; }
   .timeline li, .skills { grid-template-columns: 1fr; gap: 4px; }
   .skills dd { margin-bottom: 10px; }
 }
 
-/* medium screens: keep the lattice quiet so it never sits under text */
-@media (max-width: 1180px) and (min-width: 681px) {
-  #lattice { opacity: .45; }
+/* narrower screens: the animation moves below the text */
+@media (max-width: 1000px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 36px; padding-top: 48px; padding-bottom: 56px; }
+  .stage { max-width: 520px; }
 }
 
 /* =========================================================

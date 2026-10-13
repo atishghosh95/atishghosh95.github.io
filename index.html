@@ -33,9 +33,9 @@
   <section class="hero">
     <canvas id="lattice" aria-hidden="true"></canvas>
     <div class="wrap hero-inner">
-      <!-- EDIT: replace assets/profile.png with your own photo (square, at least 400×400) -->
-      <img class="portrait" src="assets/profile.png" alt="Atish Ghosh">
-      <div>
+      <div class="hero-text">
+        <!-- EDIT: your photo is assets/profile.jpg. To change it, upload a new square photo with the same name -->
+        <img class="portrait" src="assets/profile.jpg" alt="Atish Ghosh">
         <h1>Atish Ghosh</h1>
         <p class="role">Computational chemist and Postdoctoral Fellow at the University of Massachusetts Amherst</p>
         <p class="lede">I use density functional theory, ab initio and non-adiabatic molecular dynamics, and graph-neural-network potentials to understand how charge, light and ions move through materials for clean energy.</p>
@@ -49,13 +49,24 @@
           <li><a href="https://www.researchgate.net/profile/Atish-Ghosh-2">ResearchGate</a></li>
         </ul>
       </div>
+
+      <!-- Animated research scenes. The titles and captions are written in script.js (search for EDIT there) -->
+      <figure class="stage">
+        <div class="stage-tabs">
+          <button type="button" data-scene="0">Hot carriers</button>
+          <button type="button" data-scene="1">Surface hopping</button>
+          <button type="button" data-scene="2">NRR on a COF</button>
+        </div>
+        <canvas id="scene" role="img" aria-label="Animation of my research"></canvas>
+        <figcaption><span id="scene-title"></span><span id="scene-text"></span></figcaption>
+      </figure>
     </div>
   </section>
 
   <!-- ============ RESEARCH ============ -->
   <section id="research" class="wrap section">
     <h2>Research</h2>
-    <p class="intro">My work spans photovoltaics, photocatalysis, electrocatalysis, spintronics and metal-ion batteries, with a focus on low-dimensional and nanostructured materials. It has led to 28 peer-reviewed articles.</p>
+    <p class="intro">My work spans photovoltaics, photocatalysis, electrocatalysis, spintronics and metal-ion batteries, with a focus on low-dimensional and nanostructured materials. It has led to 27 peer-reviewed articles, with one more in press.</p>
 
     <!-- EDIT: to add a theme, copy one <div class="theme"> ... </div> block -->
     <div class="themes">
