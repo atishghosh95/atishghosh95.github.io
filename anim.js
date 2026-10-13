@@ -3,7 +3,7 @@
 // "Research explained" page. Any <canvas class="anim" data-anim="NAME">
 // on a page is animated automatically, where NAME is one of:
 //   dft, aimd, namd, hop, gnn, pv, water, nrr, electro, spin,
-//   battery, thermo, qd, gas (flagship GaS NRR story), eqc (E(q)C-GNN story)
+//   battery, thermo, qd, gas (flagship GaS NRR story), eqc (E(q)C-GNN story), bcof (B-aza-COF NRR story)
 // To add an animation to a page, copy one such <canvas> line.
 // You don't need to edit this file.
 // =====================================================================
@@ -820,6 +820,112 @@
         }
         caption(c, cap);
         if (t > END - .7) rect(c, 0, 0, W, H, C.paper, prog(t, END - .7, END));
+      }
+    };
+  })();
+
+  // ---------- B-aza-COF story (J. Phys. Chem. Lett. 2024) ----------
+  S.bcof = (() => {
+    const names = ["Design", "Light", "N₂ binds", "NRR", "NAMD"];
+    const ST = [0, 3.8, 7, 10, 15.8], END = 20;
+    const a = 34, cx = 200, cy = 240, nodes = [], bonds = [];
+    for (let m = -7; m <= 7; m++) for (let n = -7; n <= 7; n++) {
+      const x = cx + (m + n) * 1.5 * a, y = cy + (m - n) * Math.sqrt(3) / 2 * a;
+      [[x, y], [x + a, y]].forEach(p => { if (p[0] > -20 && p[0] < 460 && p[1] > 186 && p[1] < 320) nodes.push(p); });
+    }
+    for (let i = 0; i < nodes.length; i++) for (let j = i + 1; j < nodes.length; j++)
+      if (Math.abs(Math.hypot(nodes[i][0] - nodes[j][0], nodes[i][1] - nodes[j][1]) - a) < 1) bonds.push([i, j]);
+    let hub = 0, best = 1e9;
+    nodes.forEach((p, i) => { const d = Math.hypot(p[0] - cx, p[1] - cy); if (d < best) { best = d; hub = i; } });
+    const B0 = nodes[hub];
+    const stage = t => { let k = 0; ST.forEach((s, i) => { if (t >= s) k = i; }); return k; };
+    function band(c, x0, y0, e, alpha = 1, hot = 0) {   // small band diagram with an electron at level e (0 = CBM, 1 = high)
+      rect(c, x0, y0, 120, 100, C.paper, .9 * alpha, C.rule);
+      [0, 1, 2, 3].forEach(i => line(c, x0 + 16, y0 + 18 + i * 9, x0 + 104, y0 + 18 + i * 9, C.ink, 1.2, (i === 3 ? 1 : .4) * alpha));
+      line(c, x0 + 16, y0 + 80, x0 + 104, y0 + 80, C.ink, 1.6, alpha);
+      text(c, "CB", x0 + 108, y0 + 45, C.muted, 10, "right", alpha); text(c, "VB", x0 + 108, y0 + 90, C.muted, 10, "right", alpha);
+      text(c, "1.53 eV", x0 + 20, y0 + 64, C.muted, 10, "left", alpha);
+      const ey = y0 + 45 - e * 27;
+      glow(c, x0 + 70, ey, 12, C.teal, .5 * alpha * hot); dot(c, x0 + 70, ey, 4.5, C.teal, alpha);
+      dot(c, x0 + 70, y0 + 80, 4.5, C.paper, alpha, C.amber, 2);
+    }
+    return {
+      dur: END,
+      draw(c, t) {
+        const k = stage(t); chipRow(c, names, k);
+        bonds.forEach(([i, j]) => line(c, nodes[i][0], nodes[i][1], nodes[j][0], nodes[j][1], C.muted, 2, .5));
+        nodes.forEach((p, i) => { if (i !== hub) dot(c, p[0], p[1], 4.5, (Math.round(p[0] / a * 3) + Math.round(p[1] / a * 3)) % 3 ? C.muted : C.blue, .7); });
+        // boron arrives in the design stage
+        const bin = ease(prog(t, .6, 2));
+        const bx = B0[0], by = lerp(B0[1] - 90, B0[1], bin);
+        if (t > .6) { glow(c, bx, by, 26, C.rose, .35 * bin); dot(c, bx, by, 7.5, C.rose); text(c, "B", bx + 12, by + 11, C.rose, 12); }
+        let cap = "";
+        if (k === 0) {
+          cap = "Design: anchor a boron atom in the aza-COF";
+          text(c, "aza-COF band gap 1.97 eV", 424, 82, C.muted, 12, "right", prog(t, .3, .9));
+          text(c, "+ boron → 1.53 eV, absorbs more light", 424, 102, C.ink, 12, "right", prog(t, 2.2, 2.8));
+          text(c, "boron held strongly (5.54 eV) ✓", 424, 122, C.teal, 12, "right", prog(t, 2.6, 3.2));
+        }
+        if (k === 1) {
+          cap = "Light: hot electrons cool down to the band edge";
+          photon(c, 40, 70, bx - 20, B0[1] - 20, prog(t, 3.8, 4.5), C.amber, 1 - prog(t, 4.8, 5.3));
+          const e = t < 4.5 ? 0 : 1 - ease(prog(t, 4.7, 6.4));
+          band(c, 300, 70, t < 4.5 ? -1.3 : e, prog(t, 3.9, 4.2), 1 - prog(t, 5.8, 6.6));
+          text(c, "reduction power U = 0.63 V", 424, 186, C.ink, 11, "right", prog(t, 6, 6.6));
+        }
+        // N2 + hydrogens
+        if (k >= 2) {
+          const kin = ease(prog(t, 7, 8.2));
+          const NA = [bx, B0[1] - 28], NB = [bx, B0[1] - 54 - (t > 8.4 && t < 10 ? 3 : 0)];
+          const off = [lerp(160, 0, kin), lerp(-140, 0, kin)], rot = lerp(1.1, 0, kin), mid = [(NA[0] + NB[0]) / 2, (NA[1] + NB[1]) / 2];
+          const rp = p => [mid[0] + (p[0] - mid[0]) * Math.cos(rot) - (p[1] - mid[1]) * Math.sin(rot) + off[0], mid[1] + (p[0] - mid[0]) * Math.sin(rot) + (p[1] - mid[1]) * Math.cos(rot) + off[1]];
+          const pA = rp(NA), pB = rp(NB);
+          const drift = (t0, p) => { const q = prog(t, t0, t0 + 1.4); return [p[0] + 70 * q, p[1] - 80 * q, 1 - q]; };
+          const dB = t > 12.4 ? drift(12.4, pB) : [pB[0], pB[1], 1], dA = t > 14.6 ? drift(14.6, pA) : [pA[0], pA[1], 1];
+          if (t < 12.4) { const o = t < 10.4 ? 3 : t < 11 ? 2 : 1; for (let q = 0; q < o; q++) { const s = (q - (o - 1) / 2) * 3.4; line(c, pA[0] + s, pA[1], pB[0] + s, pB[1], C.blue, 1.6); } }
+          if (kin >= 1 && t < 14.6) line(c, bx, B0[1], pA[0], pA[1], C.rose, 2, .9);
+          if (k === 2 && kin >= 1) {   // charge flows from COF to N2
+            for (let q = 0; q < 3; q++) { const s = ((t * 1.3 + q / 3) % 1); dot(c, bx + 8, lerp(B0[1] - 4, pB[1], s), 2.6, C.teal, 1 - s * .6); }
+            text(c, "0.68 e⁻ flow into N₂", bx + 16, pB[1] + 8, C.teal, 12, "left", prog(t, 8.4, 8.9));
+            text(c, "N≡N bond weakens", bx + 16, pB[1] + 26, C.ink, 12, "left", prog(t, 8.8, 9.3));
+            text(c, "end-on binding, −1.05 eV", 424, 82, C.ink, 12, "right", prog(t, 8.2, 8.7));
+            cap = "N₂ binds end-on to boron";
+          }
+          const Hl = [[10.4, "B", [-14, -7]], [11, "B", [14, -7]], [11.6, "B", [0, -16]], [12.9, "A", [-14, -6]], [13.5, "A", [14, -6]], [14.1, "A", [0, -16]]];
+          Hl.forEach(([th, n, d]) => {
+            if (t < th - .5) return;
+            const base = n === "B" ? dB : dA; if (base[2] <= 0) return;
+            const q = ease(prog(t, th - .5, th)), x = lerp(40, base[0] + d[0], q), y = lerp(90, base[1] + d[1], q);
+            if (q >= 1) line(c, base[0], base[1], x, y, C.muted, 1.4, base[2]);
+            dot(c, x, y, 4.5, C.paper, base[2], C.ink);
+          });
+          dot(c, dB[0], dB[1], 7, C.blue, dB[2]); dot(c, dA[0], dA[1], 7, C.blue, dA[2]);
+          if (t < 8.4) text(c, "N₂", pB[0] + 12, pB[1], C.blue, 12);
+          if (t > 12.4) text(c, "NH₃", dB[0] + 12, dB[1] - 14, C.ink, 12, "left", dB[2]);
+          if (t > 14.6) text(c, "NH₃", dA[0] + 12, dA[1] - 14, C.ink, 12, "left", dA[2]);
+          if (k === 3) {
+            cap = t < 12.4 ? "NRR: H⁺ + e⁻ added to the outer N first (distal path)" : t < 14.6 ? "First NH₃ leaves, then the inner N is hydrogenated" : "Two NH₃ released";
+            text(c, "H⁺ + e⁻", 40, 74, C.muted, 11, "center", fade(t, 10, 10.4, 14.2, 14.6));
+            const steps = [0, -.3, -.5, -.9, -1.0, -1.4, -1.7], n = Math.min(6, Math.floor(prog(t, 10, 15.2) * 7));
+            text(c, "energy with light (U = 0.63 V)", 424, 70, C.muted, 10, "right");
+            for (let i = 0; i <= n; i++) line(c, 330 + i * 14, 98 - steps[i] * 22, 340 + i * 14, 98 - steps[i] * 22, C.teal, 2.4);
+            for (let i = 1; i <= n; i++) line(c, 330 + i * 14 - 4, 98 - steps[i - 1] * 22, 330 + i * 14, 98 - steps[i] * 22, C.teal, 1, .5, [2, 2]);
+            text(c, "every step downhill ✓", 424, 150, C.teal, 11, "right", prog(t, 14.6, 15.2));
+          }
+        }
+        if (k === 4) {
+          cap = "NAMD: electrons live long enough to do the job";
+          const r = prog(t, 16, 18.6);
+          rect(c, 14, 64, 300, 80, C.paper, .92, C.rule);
+          text(c, "time for electrons to reach N₂", 24, 80, C.muted, 11);
+          rect(c, 24, 88, 200, 9, C.rule); rect(c, 24, 88, 200 * .25 * Math.min(1, r * 3), 9, C.muted);
+          text(c, "~0.5 ps", 232, 93, C.muted, 11);
+          text(c, "electron–hole lifetime in B-aza-COF", 24, 112, C.teal, 11, "left", 1, 600);
+          rect(c, 24, 120, 200, 9, C.rule); rect(c, 24, 120, 200 * r, 9, C.teal);
+          text(c, `${(2 * r).toFixed(2)} ps`, 232, 125, C.teal, 11, "left", 1, 600);
+        }
+        caption(c, cap);
+        if (t > END - .6) rect(c, 0, 0, W, H, C.paper, prog(t, END - .6, END));
       }
     };
   })();

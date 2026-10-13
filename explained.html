@@ -38,14 +38,19 @@
   <!-- EDIT: copy one <li> ... </li> block to add a new chapter -->
   <section class="ex-group">
     <h2>My journey so far</h2>
-    <ol class="journey">
-      <li><span class="yr">2019</span><div><h3>Starting out</h3><p>Began my Ph.D. with Prof. Pranab Sarkar at Visva-Bharati, India, learning to calculate how materials behave from first principles.</p></div></li>
-      <li><span class="yr">2021</span><div><h3>Spin and sunlight</h3><p>First papers: magnetic nanoribbons and monolayers for spintronics, and 2D hybrid perovskites for solar cells.</p></div></li>
-      <li><span class="yr">2022</span><div><h3>Batteries and electron dynamics</h3><p>Designed 2D electrode materials for lithium and sodium batteries, began simulating how electrons move after light hits a material, and co-wrote a review on catalysts for nitrogen fixation.</p></div></li>
-      <li><span class="yr">2024</span><div><h3>Light-driven chemistry</h3><p>Hot electrons in COFs and perovskites, water splitting, nitrogen fixation and thermoelectrics. Completed my Ph.D. in August 2024.</p></div></li>
-      <li><span class="yr">2025</span><div><h3>Wayne State University, Detroit</h3><p>Postdoc with Prof. Zhenfei Liu on quantum-dot gels and 2D perovskites. Our graph neural network for fast molecular dynamics, E(q)C-GNN, was published.</p></div></li>
-      <li><span class="yr">2026</span><div><h3>UMass Amherst</h3><p>Postdoc with Prof. Alexandra Zagalskaya, modelling the surfaces where electrocatalysis happens. Machine-learning study of nitrogen reduction published in ACS Catalysis.</p></div></li>
-    </ol>
+    <!-- EDIT: copy one <li ...> line to add a chapter. data-text is the sentence shown below the line -->
+    <div class="jline">
+      <div class="jline-track"><div class="jline-fill"></div></div>
+      <ol>
+        <li data-year="2019" data-title="Starting out" data-text="Began my Ph.D. with Prof. Pranab Sarkar at Visva-Bharati, India, learning to calculate how materials behave from first principles."><button type="button"><span class="dot"></span><span class="y">2019</span><span class="l">PhD begins</span></button></li>
+        <li data-year="2021" data-title="Spin and sunlight" data-text="First papers: magnetic nanoribbons and monolayers for spintronics, and 2D hybrid perovskites for solar cells."><button type="button"><span class="dot"></span><span class="y">2021</span><span class="l">Spintronics</span></button></li>
+        <li data-year="2022" data-title="Batteries and electron dynamics" data-text="2D electrode materials for lithium and sodium batteries, first simulations of how electrons move after light hits a material, and a review on nitrogen-fixation catalysts."><button type="button"><span class="dot"></span><span class="y">2022</span><span class="l">Batteries</span></button></li>
+        <li data-year="2024" data-title="Light-driven chemistry" data-text="Hot electrons in COFs and perovskites, water splitting, nitrogen fixation and thermoelectrics. Ph.D. completed in August 2024."><button type="button"><span class="dot"></span><span class="y">2024</span><span class="l">Ph.D.</span></button></li>
+        <li data-year="2025" data-title="Wayne State University" data-text="Postdoc with Prof. Zhenfei Liu on quantum-dot gels and 2D perovskites. E(q)C-GNN, our graph neural network for fast molecular dynamics, published."><button type="button"><span class="dot"></span><span class="y">2025</span><span class="l">Detroit</span></button></li>
+        <li data-year="2026" data-title="UMass Amherst" data-text="Postdoc with Prof. Alexandra Zagalskaya on electrocatalytic interfaces. Machine-learning study of nitrogen reduction on GaS published in ACS Catalysis."><button type="button"><span class="dot"></span><span class="y">2026</span><span class="l">Amherst</span></button></li>
+      </ol>
+      <p class="jline-text" aria-live="polite"></p>
+    </div>
   </section>
 
   <!-- ============ TOOLS ============ -->
@@ -62,13 +67,13 @@
         <canvas class="anim" data-anim="dft" role="img" aria-label="Animation of density functional theory converging"></canvas>
         <h3>Density functional theory (DFT)</h3>
         <p>Electrons are too small to watch, so the computer works out where they must be. It makes a guess, checks it against the laws of quantum physics, improves it, and repeats until the answer stops changing. Then we know the material's energy, its colour, and whether it conducts electricity.</p>
-        <p class="mine">DFT is the starting point of almost every project I've worked on, using codes such as VASP and Quantum ESPRESSO.</p>
+        <p class="mine">Shown here: the holey C₂N monolayer, which I studied as a catalyst for lithium–air batteries (J. Mater. Chem. A 2025). DFT is the starting point of almost every project I've worked on.</p>
       </article>
       <article class="ex-card">
         <canvas class="anim" data-anim="aimd" role="img" aria-label="Animation of atoms vibrating in molecular dynamics"></canvas>
         <h3>Ab initio molecular dynamics (AIMD)</h3>
         <p>Atoms never sit still; they wiggle with heat. AIMD calculates the push on every atom from its electrons, moves each atom a tiny step, and repeats thousands of times. The result is a movie of the material with frames a millionth of a billionth of a second (a femtosecond) apart.</p>
-        <p class="mine">I use AIMD to check that new materials stay stable at room temperature and to create training data for machine learning.</p>
+        <p class="mine">Shown here: the g-CN/WTe₂ heterostructure (J. Phys. Chem. Lett. 2022), a g-CN sheet resting on WTe₂, held only by weak van der Waals forces. Its AIMD runs later became training data for E(q)C-GNN.</p>
       </article>
       <article class="ex-card">
         <canvas class="anim" data-anim="namd" role="img" aria-label="Animation of an excited electron stepping down energy levels"></canvas>
@@ -82,11 +87,11 @@
         <p>Think of two hilly landscapes stacked on top of each other: an excited one and a calm one. After light hits, the atoms roll around on the upper landscape. Where the two landscapes nearly touch, the system can hop down. Surface hopping simulates many such journeys to predict how a material relaxes after absorbing light.</p>
         <p class="mine">I run these simulations with Hefei-NAMD using several surface-hopping methods.</p>
       </article>
-      <article class="ex-card">
-        <canvas class="anim" data-anim="gnn" role="img" aria-label="Animation of a graph neural network passing messages between atoms"></canvas>
-        <h3>Machine learning with graph neural networks</h3>
-        <p>A graph neural network sees a material as a network: atoms are dots and bonds are lines. Atoms pass messages to their neighbours, and after a few rounds the network predicts energies and forces. Once trained on DFT results, it gives similar answers far faster, so we can simulate much bigger systems for much longer.</p>
-        <p class="mine">I co-developed E(q)C-GNN (J. Phys. Chem. Lett. 2025) and used it to speed up simulations of nitrogen reduction (ACS Catal. 2026).</p>
+      <article class="ex-card flagship">
+        <canvas class="anim" data-anim="eqc" role="img" aria-label="Animation: AIMD data turned into a graph, message passing, predictions matching AIMD, and the speed-up of E(q)C-GNN"></canvas>
+        <h3>Machine learning: E(q)C-GNN</h3>
+        <p>AIMD is accurate but painfully slow, because it solves DFT at every tiny time step. So we taught a neural network to do the job. We ran AIMD on real 2D materials, turned every snapshot into a graph where atoms are dots and bonds are lines, and let the network learn from nothing but the atoms' positions. Atoms pass messages to their neighbours, and the network predicts energies, entropy and forces within about 3% of AIMD. It also gives the same answer if you rotate the material, as physics demands, and it runs several orders of magnitude faster on an ordinary desktop computer.</p>
+        <p class="mine">D. Maji, A. Ghosh, D. Barman, P. Sarkar, J. Phys. Chem. Lett. 16, 2254–2264 (2025), tested on g-CN, WTe₂ and g-CN/WTe₂. <a href="https://doi.org/10.1021/acs.jpclett.5c00217">Read the paper</a></p>
       </article>
       <article class="ex-card flagship">
         <canvas class="anim" data-anim="gas" role="img" aria-label="Animation: DFT, AIMD, GNN, light absorption, nitrogen reduction and NAMD on a GaS sheet"></canvas>
@@ -114,11 +119,11 @@
         <p>This is like artificial photosynthesis. A thin sheet of material soaks up sunlight and uses the energy to split water into hydrogen fuel and oxygen. For every bubble of oxygen you get two of hydrogen.</p>
         <p class="mine">Stacked 2D photocatalysts such as MoS₂/BSe and Ti₂CO₂–WSe₂, Z-scheme designs, and covalent organic frameworks for overall water splitting.</p>
       </article>
-      <article class="ex-card">
-        <canvas class="anim" data-anim="nrr" role="img" aria-label="Animation of nitrogen turning into ammonia on a COF"></canvas>
-        <h3>Making fertiliser with sunlight (nitrogen reduction)</h3>
-        <p>Plants need ammonia, but making it today burns huge amounts of fossil fuel. Here, nitrogen from the air lands on a boron atom in a porous sheet called a COF. Powered by light, hydrogen atoms are added one by one until two ammonia molecules float away.</p>
-        <p class="mine">Boron-anchored aza-COF (J. Phys. Chem. Lett. 2024), defective boron nitride (J. Phys. Chem. Lett. 2025), and machine-learning-accelerated NRR (ACS Catal. 2026).</p>
+      <article class="ex-card flagship">
+        <canvas class="anim" data-anim="bcof" role="img" aria-label="Animation: boron anchored in an aza-COF, hot electrons cooling, N2 binding, hydrogenation to ammonia, and electron lifetime"></canvas>
+        <h3>Making fertiliser with sunlight: a boron-doped COF</h3>
+        <p>Plants need ammonia, but making it today burns huge amounts of fossil fuel. We asked whether a metal-free porous sheet, an aza-COF, could do it with sunlight. Adding a single boron atom narrows the band gap from 1.97 to 1.53 eV, so the sheet soaks up more light. Light creates "hot" electrons that quickly cool to the band edge. Nitrogen from the air sticks to the boron end-on and receives electrons, which weakens its very strong triple bond. Hydrogen is then added one atom at a time until two ammonia molecules leave, and with the light's energy every step goes downhill. Finally, NAMD shows the electrons last about 2 picoseconds, longer than the ~0.5 ps they need to reach the nitrogen.</p>
+        <p class="mine">P. Das, A. Ghosh, P. Sarkar, J. Phys. Chem. Lett. 15, 4898–4905 (2024). <a href="https://doi.org/10.1021/acs.jpclett.4c00999">Read the paper</a>. Related: defective boron nitride (J. Phys. Chem. Lett. 2025) and the GaS study above.</p>
       </article>
       <article class="ex-card">
         <canvas class="anim" data-anim="electro" role="img" aria-label="Animation of water electrolysis with and without a catalyst"></canvas>

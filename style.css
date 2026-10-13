@@ -249,3 +249,26 @@ canvas.anim {
 }
 
 .ex-card.flagship canvas.anim { border-color: var(--teal); border-width: 2px; }
+
+/* one-line animated journey */
+.jline { position: relative; margin-top: 1.25rem; }
+.jline-track { position: absolute; left: 6px; right: 6px; top: 7px; height: 2px; background: var(--rule); }
+.jline-fill { height: 100%; width: 0; background: var(--teal); transition: width .8s ease; }
+.jline ol { list-style: none; padding: 0; margin: 0; display: flex; justify-content: space-between; position: relative; }
+.jline li button {
+  display: flex; flex-direction: column; align-items: center; gap: 6px; background: none; border: 0; padding: 0;
+  font: inherit; color: var(--muted); cursor: pointer; min-width: 44px;
+}
+.jline li:first-child button { align-items: flex-start; }
+.jline li:last-child button { align-items: flex-end; }
+.jline .dot { width: 16px; height: 16px; border-radius: 50%; background: var(--paper); border: 2px solid var(--rule); transition: background .3s, border-color .3s, transform .3s; }
+.jline li.past .dot { background: var(--teal); border-color: var(--teal); }
+.jline li.on .dot { background: var(--amber); border-color: var(--amber); transform: scale(1.25); }
+.jline .y { font-weight: 600; font-variant-numeric: tabular-nums; }
+.jline li.on .y { color: var(--amber); }
+.jline .l { font-size: .85rem; }
+.jline li.on .l { color: var(--ink); }
+.jline button:focus-visible { outline: 2px solid var(--teal); outline-offset: 4px; border-radius: 4px; }
+.jline-text { margin: 1rem 0 0; min-height: 3.2em; max-width: 46em; color: var(--muted); }
+.jline-text strong { color: var(--ink); font-weight: 600; }
+@media (max-width: 600px) { .jline .l { display: none; } }
