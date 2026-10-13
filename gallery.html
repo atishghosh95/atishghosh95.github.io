@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gallery | Atish Ghosh</title>
+  <link rel="icon" href="assets/profile.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <nav class="wrap nav">
+    <a class="nav-name" href="index.html">Atish Ghosh</a>
+    <div class="nav-links">
+      <a href="index.html#research">Research</a>
+      <a href="index.html#experience">Experience</a>
+      <a href="index.html#publications">Publications</a>
+      <a href="gallery.html" aria-current="page">Gallery</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<main class="wrap section gallery-page">
+  <h1 class="page-title">Gallery</h1>
+  <!-- EDIT: change this sentence however you like -->
+  <p class="intro">Conferences, labs, collaborators and moments along the way. Click any photo to see it larger.</p>
+
+  <!--
+    ================= HOW TO ADD A PHOTO =================
+    1. Upload your photo into the folder assets/gallery/ on GitHub
+       (open the folder, then Add file → Upload files).
+       Tip: keep photos under ~1 MB; resize big phone photos first.
+    2. Copy this block and paste it where you want the photo to appear
+       (newest at the top is a good habit):
+
+    <figure>
+      <img src="assets/gallery/YOUR-FILE-NAME.jpg" alt="Short description of the photo" loading="lazy">
+      <figcaption>Caption shown under the photo · Place, Year</figcaption>
+    </figure>
+
+    3. Change YOUR-FILE-NAME.jpg to the exact file name (capital letters matter!),
+       and write your own description and caption. The caption line is optional;
+       delete it if you don't want one.
+    To remove a photo, delete its whole <figure> ... </figure> block.
+    ======================================================
+  -->
+
+  <div class="gallery">
+    <figure>
+      <img src="assets/gallery/photo1.jpg" alt="Placeholder photo 1" loading="lazy">
+      <figcaption>Midwest Theoretical Chemistry Conference, Detroit, 2025</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/gallery/photo2.jpg" alt="Placeholder photo 2" loading="lazy">
+      <figcaption>Poster session, Theoretical Chemistry Symposium, IIT Madras, 2023</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/gallery/photo3.jpg" alt="Placeholder photo 3" loading="lazy">
+      <figcaption>With the group at UMass Amherst, 2026</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/gallery/photo4.jpg" alt="Placeholder photo 4" loading="lazy">
+      <figcaption>Ph.D. convocation, Visva-Bharati, 2024</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/gallery/photo5.jpg" alt="Placeholder photo 5" loading="lazy">
+      <figcaption>Wayne State University, Detroit</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/gallery/photo6.jpg" alt="Placeholder photo 6" loading="lazy">
+      <figcaption>Santiniketan</figcaption>
+    </figure>
+  </div>
+</main>
+
+<!-- Full-size viewer. You don't need to edit this. -->
+<dialog id="viewer" aria-label="Photo viewer">
+  <button class="v-close" aria-label="Close">×</button>
+  <button class="v-prev" aria-label="Previous photo">‹</button>
+  <figure>
+    <img id="v-img" alt="">
+    <figcaption id="v-cap"></figcaption>
+  </figure>
+  <button class="v-next" aria-label="Next photo">›</button>
+</dialog>
+
+<footer class="wrap footer">
+  <p>© 2026 Atish Ghosh</p>
+  <p class="footer-links">
+    <a href="https://www.linkedin.com/in/atish-ghosh-63a387167/">LinkedIn</a>
+    <a href="https://www.researchgate.net/profile/Atish-Ghosh-2">ResearchGate</a>
+    <a href="https://www.instagram.com/atishg95/">Instagram</a>
+  </p>
+</footer>
+
+<script src="gallery.js"></script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- EDIT: the title shown in the browser tab and in Google results -->
+  <title>Atish Ghosh, Ph.D. | Computational Chemist</title>
+  <meta name="description" content="Atish Ghosh — computational chemist working on DFT, non-adiabatic dynamics and machine-learned simulation of energy materials.">
+  <link rel="icon" href="assets/profile.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <nav class="wrap nav">
+    <a class="nav-name" href="#top">Atish Ghosh</a>
+    <div class="nav-links">
+      <a href="#research">Research</a>
+      <a href="#experience">Experience</a>
+      <a href="#publications">Publications</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO (name, title, photo, links) ============ -->
+  <section class="hero">
+    <canvas id="lattice" aria-hidden="true"></canvas>
+    <div class="wrap hero-inner">
+      <!-- EDIT: replace assets/profile.png with your own photo (square, at least 400×400) -->
+      <img class="portrait" src="assets/profile.png" alt="Atish Ghosh">
+      <div>
+        <h1>Atish Ghosh</h1>
+        <p class="role">Computational chemist and Postdoctoral Fellow at the University of Massachusetts Amherst</p>
+        <p class="lede">I use density functional theory, ab initio and non-adiabatic molecular dynamics, and graph-neural-network potentials to understand how charge, light and ions move through materials for clean energy.</p>
+        <!-- EDIT: links. Replace the # in Google Scholar and YOUR-USERNAME in GitHub -->
+        <ul class="links">
+          <li><a href="mailto:atishghosh@umass.edu">Email</a></li>
+          <li><a href="assets/Atish_Ghosh_CV.pdf">CV (PDF)</a></li>
+          <li><a href="#">Google Scholar</a></li>
+          <li><a href="https://github.com/YOUR-USERNAME">GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/atish-ghosh-63a387167/">LinkedIn</a></li>
+          <li><a href="https://www.researchgate.net/profile/Atish-Ghosh-2">ResearchGate</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESEARCH ============ -->
+  <section id="research" class="wrap section">
+    <h2>Research</h2>
+    <p class="intro">My work spans photovoltaics, photocatalysis, electrocatalysis, spintronics and metal-ion batteries, with a focus on low-dimensional and nanostructured materials. It has led to 27 peer-reviewed articles, with one more in press.</p>
+
+    <!-- EDIT: to add a theme, copy one <div class="theme"> ... </div> block -->
+    <div class="themes">
+      <div class="theme">
+        <h3>Excited carriers and photocatalysis</h3>
+        <p>Non-adiabatic molecular dynamics of hot-carrier relaxation, charge transfer and recombination in van der Waals heterostructures, COFs and halide perovskites, and what they mean for solar water splitting and nitrogen fixation.</p>
+      </div>
+      <div class="theme">
+        <h3>Machine-learned atomistic simulation</h3>
+        <p>Graph neural networks that make molecular dynamics fast enough to sample reactive interfaces, including E(q)C-GNN and GNN-accelerated studies of photocatalytic nitrogen reduction.</p>
+      </div>
+      <div class="theme">
+        <h3>Electrocatalysis and interfaces</h3>
+        <p>Adsorption energetics, defects and surface terminations at electrochemical interfaces, developed alongside experimental partners to guide the design of better electrocatalysts.</p>
+      </div>
+      <div class="theme">
+        <h3>Energy storage</h3>
+        <p>First-principles design of 2D electrode materials for Li- and Na-ion batteries and bifunctional catalysts for Li–air cells.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EXPERIENCE & EDUCATION ============ -->
+  <section id="experience" class="wrap section">
+    <h2>Experience</h2>
+    <!-- EDIT: newest first. Copy one <li> ... </li> block to add a position -->
+    <ol class="timeline">
+      <li>
+        <span class="when">2026 – present</span>
+        <div>
+          <h3>Postdoctoral Research Fellow</h3>
+          <p class="where">Chemical &amp; Biomolecular Engineering, University of Massachusetts Amherst · with Prof. Alexandra Zagalskaya</p>
+          <p>Atomistic and electronic-structure modeling of electrochemical interfaces and electrocatalysts.</p>
+        </div>
+      </li>
+      <li>
+        <span class="when">2025 – 2026</span>
+        <div>
+          <h3>Postdoctoral Research Associate</h3>
+          <p class="where">Department of Chemistry, Wayne State University · with Prof. Zhenfei Liu</p>
+          <p>Electronic structure of CdX quantum-dot gels and 2D perovskites, and energy transfer at quantum dot–dye interfaces.</p>
+        </div>
+      </li>
+      <li>
+        <span class="when">2019 – 2024</span>
+        <div>
+          <h3>Doctoral Researcher</h3>
+          <p class="where">Department of Chemistry, Visva-Bharati · with Prof. Pranab Sarkar</p>
+          <p>DFT and NAMD studies of charge and energy transfer and transport in low-dimensional systems.</p>
+        </div>
+      </li>
+    </ol>
+
+    <h2 class="sub">Education</h2>
+    <ol class="timeline">
+      <li><span class="when">2024</span><div><h3>Ph.D. in Chemistry</h3><p class="where">Visva-Bharati (A Central University), India</p><p>Thesis: Electronic structure and transport properties of low-dimensional systems with special emphasis on spintronics and energy applications.</p></div></li>
+      <li><span class="when">2018</span><div><h3>M.Sc. in Chemistry (Physical Chemistry)</h3><p class="where">University of Burdwan, India</p></div></li>
+      <li><span class="when">2016</span><div><h3>B.Sc. in Chemistry</h3><p class="where">University of Burdwan, India</p></div></li>
+    </ol>
+  </section>
+
+  <!-- ============ SKILLS ============ -->
+  <section id="skills" class="wrap section">
+    <h2>Methods and tools</h2>
+    <!-- EDIT: add or remove items freely -->
+    <dl class="skills">
+      <dt>Methods</dt><dd>DFT, CI-NEB transition states, TD-DFT optics, AIMD, NEGF ballistic transport, NAMD with surface hopping</dd>
+      <dt>Machine learning</dt><dd>Graph neural networks for accelerated MD and property prediction, Python ML workflows</dd>
+      <dt>Codes</dt><dd>VASP, Quantum ESPRESSO, Gaussian, SIESTA, Hefei-NAMD, VASPKIT, VAMPIRE</dd>
+      <dt>Programming</dt><dd>Python, C, LaTeX, Linux and HPC clusters</dd>
+    </dl>
+  </section>
+
+  <!-- ============ PUBLICATIONS ============ -->
+  <section id="publications" class="wrap section">
+    <h2>Publications</h2>
+    <p class="intro">My name is in bold. A full, up-to-date list is on <a href="#">Google Scholar</a>.</p>
+
+    <!--
+      EDIT: to add a paper, copy this template into the right year:
+      <li><span class="t">Title</span> <span class="a">Authors, <b>A. Ghosh</b>, ...</span> <span class="j">Journal Volume, pages (Year)</span> <a href="https://doi.org/...">DOI</a></li>
+      To start a new year, copy a whole <h3 class="year">...</h3><ol class="pubs">...</ol> pair.
+    -->
+
+    <h3 class="year">In press</h3>
+    <ol class="pubs">
+      <li><span class="t">Understanding the impact of BiVO₄ surface facet and termination on infrared spectroscopy and oxygen evolution reaction</span> <span class="a">S. Zhang, <b>A. Ghosh</b>, H. Maekawa, A. Zagalskaya, R. Donapati, S. Ardo, Y. Yamaguchi, A. Kudo, N. Ge, T. A. Pham, T. Ogitsu</span> <span class="j">J. Chem. Phys., in press</span></li>
+    </ol>
+
+    <h3 class="year">2026</h3>
+    <ol class="pubs">
+      <li><span class="t">Stabilization of oxygen vacancies and enhancement of photocatalytic nitrogen fixation in antimony molybdate via cobalt/iron co-doping</span> <span class="a">C. Tang, D. Ahire, A. Zagalskaya, <b>A. Ghosh</b>, A. Wang, Y. Hang, X. Chen, et al.</span> <span class="j">Chem. Eng. J. 180400 (2026)</span></li>
+      <li><span class="t">MOFs, COFs and beyond: a theoretical perspective on the electrocatalytic activities of 2D materials toward sustainable energy conversion</span> <span class="a">B. Ball, P. Roy, P. Das, <b>A. Ghosh</b>, A. Pramanik, P. Sarkar</span> <span class="j">Chem. Commun. (2026), Perspective</span></li>
+      <li><span class="t">Generating long-lived highly excited carriers in undoped perovskite nanostructures by two-photon upconversion</span> <span class="a">H. Musah, T. Gamagedara, E. Pathan, A. Afugu, <b>A. Ghosh</b>, S. K. Lee, Z. F. Liu, et al.</span> <span class="j">Nano Lett. (2026)</span></li>
+      <li><span class="t">Resolving energy transfer dynamics at the quantum dot gels–perylene diimide hybrid interface</span> <span class="a">A. J. King, F. I. M. Saheed, M. Adeyemo, V. Alevato, D. Kennedy, R. Zhang, et al., incl. <b>A. Ghosh</b></span> <span class="j">J. Phys. Chem. Lett. 17, 5990–5997 (2026)</span></li>
+      <li><span class="t">Magnetic response of excitons and excitonic complexes in defective hexyl ammonium lead iodide self-assembled quantum wells</span> <span class="a">M. F. Munoz, D. Konadu, A. M. Sanni, C. L. Ward, <b>A. Ghosh</b>, A. Afugu, Z. F. Liu, et al.</span> <span class="j">ACS Nano 20, 10794–10806 (2026)</span></li>
+      <li><span class="t">Graph neural network-assisted performance regulation of photocatalytic nitrogen reduction reaction: an insight from machine learning-accelerated atomistic dynamics</span> <span class="a"><b>A. Ghosh</b>, P. Das, D. Maji, D. Barman, P. Sarkar</span> <span class="j">ACS Catal. 16, 3284–3295 (2026)</span></li>
+    </ol>
+
+    <h3 class="year">2025</h3>
+    <ol class="pubs">
+      <li><span class="t">Unveiling the photocatalytic water splitting over metal-free g-CN/γ-BNyne heterostructures using non-adiabatic molecular dynamics</span> <span class="a">S. Kumar, <b>A. Ghosh</b>, P. Sarkar</span> <span class="j">Phys. Chem. Chem. Phys. 27, 19724–19732 (2025)</span></li>
+      <li><span class="t">Vacancy defect-assisted enhanced nitrogen fixation in metal-free 2D orthorhombic boron nitride: insights from nonadiabatic molecular dynamics simulations</span> <span class="a">S. Kumar, <b>A. Ghosh</b>, B. Goswami, P. Sarkar</span> <span class="j">J. Phys. Chem. Lett. 16, 8311–8320 (2025)</span></li>
+      <li><span class="t">Accelerating molecular dynamics with a graph neural network: a scalable approach through E(q)C-GNN</span> <span class="a">D. Maji, <b>A. Ghosh</b>, D. Barman, P. Sarkar</span> <span class="j">J. Phys. Chem. Lett. 16, 2254–2264 (2025)</span></li>
+      <li><span class="t">Theoretical investigation of a C₂N monolayer as a bifunctional electrocatalyst for rechargeable non-aqueous Li–air batteries</span> <span class="a">P. Das, <b>A. Ghosh</b>, B. Goswami, P. Sarkar</span> <span class="j">J. Mater. Chem. A 13, 6376–6384 (2025)</span></li>
+    </ol>
+
+    <h3 class="year">2024</h3>
+    <ol class="pubs">
+      <li><span class="t">Photocarrier dynamics of two-dimensional aza-fused covalent organic frameworks as bifunctional photocatalysts toward overall water splitting</span> <span class="a">P. Das, <b>A. Ghosh</b>, P. Sarkar</span> <span class="j">ACS Appl. Mater. Interfaces 16, 62043–62051 (2024)</span></li>
+      <li><span class="t">Promoting overall water splitting in MoS₂/BSe heterostructures: insights from time-domain atomistic dynamics</span> <span class="a">S. Kumar, <b>A. Ghosh</b>, P. Sarkar</span> <span class="j">J. Phys. Chem. C 128, 17361–17371 (2024)</span></li>
+      <li><span class="t">Controlling the charge carrier dynamics of o-B₂N₂ monolayer through pnictogen family atoms doping</span> <span class="a">S. Kumar, <b>A. Ghosh</b>, S. Pal, P. Sarkar</span> <span class="j">J. Phys. Chem. Lett. 15, 9388–9396 (2024)</span></li>
+      <li><span class="t">Emergence of Z-scheme photocatalysis for total water splitting: an improvised route to high efficiency</span> <span class="a"><b>A. Ghosh</b>, A. Pramanik, S. Pal, P. Sarkar</span> <span class="j">J. Phys. Chem. Lett. 15, 6841–6851 (2024)</span></li>
+      <li><span class="t">Hot carrier controlled nitrogen fixation reaction in metal-free boron-anchored aza-COF: insight from nonadiabatic molecular dynamics simulation</span> <span class="a">P. Das, <b>A. Ghosh</b>, P. Sarkar</span> <span class="j">J. Phys. Chem. Lett. 15, 4898–4905 (2024)</span></li>
+      <li><span class="t">Hot carrier relaxation dynamics of an aza-covalent organic framework during photoexcitation: an insight from ab initio quantum dynamics</span> <span class="a"><b>A. Ghosh</b>, P. Das, S. Kumar, P. Sarkar</span> <span class="j">J. Chem. Phys. 160 (2024)</span></li>
+      <li><span class="t">Understanding the origin of the high thermoelectric figure of merit of Zintl-phase KCaBi</span> <span class="a">S. Mandal, <b>A. Ghosh</b>, P. Sarkar</span> <span class="j">Phys. Chem. Chem. Phys. 26, 13198–13208 (2024)</span></li>
+      <li><span class="t">Point defect-mediated hot carrier relaxation dynamics of lead-free FASnI₃ perovskites</span> <span class="a"><b>A. Ghosh</b>, S. Kumar, P. Sarkar</span> <span class="j">Nanoscale 16, 4737–4744 (2024)</span></li>
+    </ol>
+
+    <h3 class="year">2023</h3>
+    <ol class="pubs">
+      <li><span class="t">How the stacking pattern influences the charge transfer dynamics of van der Waals heterostructures: an answer from a time-domain ab initio study</span> <span class="a"><b>A. Ghosh</b>, B. Goswami, S. Pal, P. Sarkar</span> <span class="j">J. Phys. Chem. Lett. 14, 7672–7679 (2023)</span></li>
+    </ol>
+
+    <h3 class="year">2022</h3>
+    <ol class="pubs">
+      <li><span class="t">Recent progress in computational design of single-atom/cluster catalysts for electrochemical and solar-driven N₂ fixation</span> <span class="a">S. Ghoshal, <b>A. Ghosh</b>, P. Roy, B. Ball, A. Pramanik, P. Sarkar</span> <span class="j">ACS Catal. 12, 15541–15575 (2022), Review</span></li>
+      <li><span class="t">Exploring the Ti₂CO₂–WSe₂ heterostructure as a direct Z-scheme photocatalyst for water splitting: a non-adiabatic study</span> <span class="a">S. Sannigrahi, <b>A. Ghosh</b>, B. Ball, P. Sarkar</span> <span class="j">J. Phys. Chem. C 126, 20852–20863 (2022)</span></li>
+      <li><span class="t">Ultrafast charge transfer and delayed recombination in graphitic-CN/WTe₂ van der Waals heterostructure: a time domain ab initio study</span> <span class="a"><b>A. Ghosh</b>, B. Ball, S. Pal, P. Sarkar</span> <span class="j">J. Phys. Chem. Lett. 13, 7898–7905 (2022)</span></li>
+      <li><span class="t">2D homogeneous holey carbon nitride: an efficient anode material for Li-ion batteries with ultrahigh capacity</span> <span class="a"><b>A. Ghosh</b>, S. Mandal, P. Sarkar</span> <span class="j">ChemPhysChem 23, e202200182 (2022)</span></li>
+      <li><span class="t">Rational design of two-dimensional porous boron phosphide as efficient cathode material for Li and Na ion batteries: a first-principles study</span> <span class="a"><b>A. Ghosh</b>, S. Pal, P. Sarkar</span> <span class="j">J. Phys. Chem. C 126, 5092–5100 (2022)</span></li>
+    </ol>
+
+    <h3 class="year">2021</h3>
+    <ol class="pubs">
+      <li><span class="t">Arene and functionalized arene based two dimensional organic–inorganic hybrid perovskites for photovoltaic applications</span> <span class="a">M. Kar, <b>A. Ghosh</b>, R. Sarkar, S. Pal, P. Sarkar</span> <span class="j">J. Comput. Chem. 42, 1982–1990 (2021)</span></li>
+      <li><span class="t">First-principles calculations to investigate electronic structure and transport properties of CrC monolayers: a new horizon for spintronic application</span> <span class="a"><b>A. Ghosh</b>, M. Kar, C. Majumder, P. Sarkar</span> <span class="j">Mater. Sci. Eng. B 272, 115379 (2021)</span></li>
+      <li><span class="t">Half metallicity and ferromagnetism of vanadium nitride nanoribbons: a first-principles study</span> <span class="a"><b>A. Ghosh</b>, M. Kar, C. Majumder, P. Sarkar</span> <span class="j">Phys. Chem. Chem. Phys. 23, 1127–1138 (2021)</span></li>
+    </ol>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact" class="wrap section">
+    <h2>Contact</h2>
+    <p class="intro">I am always glad to hear about collaborations and postdoctoral opportunities.</p>
+    <p class="contact-line"><a href="mailto:atishghosh@umass.edu">atishghosh@umass.edu</a></p>
+    <p>Department of Chemical &amp; Biomolecular Engineering<br>University of Massachusetts Amherst, MA 01003, USA</p>
+  </section>
+</main>
+
+<footer class="wrap footer">
+  <p>© 2026 Atish Ghosh</p>
+  <p class="footer-links">
+    <a href="https://www.linkedin.com/in/atish-ghosh-63a387167/">LinkedIn</a>
+    <a href="https://www.researchgate.net/profile/Atish-Ghosh-2">ResearchGate</a>
+    <a href="https://www.instagram.com/atishg95/">Instagram</a>
+  </p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
