@@ -26,56 +26,140 @@
   </nav>
 </header>
 
-<main class="wrap section gallery-page">
-  <h1 class="page-title">Gallery</h1>
-  <!-- EDIT: change this sentence however you like -->
-  <p class="intro">Conferences, labs, collaborators and moments along the way. Click any photo to see it larger.</p>
+<main class="gallery-page">
+  <section class="wrap g-hero">
+    <h1 class="page-title">Gallery</h1>
+    <!-- EDIT: change this sentence however you like -->
+    <p class="intro">Milestones from the lab and conferences in the middle, framed by two Digital Wheels of photos I love. Hover over a wheel to pause it, scroll to spin it, and click any photo to see it full size.</p>
+  </section>
 
   <!--
-    ================= HOW TO ADD A PHOTO =================
-    1. Upload your photo into the folder assets/gallery/ on GitHub
-       (open the folder, then Add file → Upload files).
-       Tip: keep photos under ~1 MB; resize big phone photos first.
-    2. Copy this block and paste it where you want the photo to appear
-       (newest at the top is a good habit):
+    ================= THE TWO DIGITAL WHEELS =================
+    Each photo has two copies with the same name:
+      a small one shown in the wheel:      assets/photography/07.jpg   (Wheel 1)
+                                           assets/photography2/07.jpg  (Wheel 2)
+      a large one opened when clicked:     .../full/07.jpg  (set by data-full)
+    To swap a photo, upload new files with the same names into both folders.
+    To add one, copy an <img ...> line and change the numbers.
+    The alt="..." text is the caption shown when the photo is opened.
+    Remember to update the "photographs" count under each title.
 
-    <figure>
-      <img src="assets/gallery/YOUR-FILE-NAME.jpg" alt="Short description of the photo" loading="lazy">
-      <figcaption>Caption shown under the photo · Place, Year</figcaption>
-    </figure>
-
-    3. Change YOUR-FILE-NAME.jpg to the exact file name (capital letters matter!),
-       and write your own description and caption. The caption line is optional;
-       delete it if you don't want one.
-    To remove a photo, delete its whole <figure> ... </figure> block.
-    ======================================================
+    ================= THE SIX MAIN PHOTOS =================
+    Upload a photo into assets/gallery/ and change the matching <figure> below.
+    The 1st and 6th photos are shown wide; the others in pairs.
+    ==========================================================
   -->
+  <div class="wrap gallery-layout">
+    <aside class="reel reel-left" aria-label="Digital Wheel 1">
+      <div class="reel-head">
+        <h2 class="reel-title">Digital Wheel 1</h2>
+        <p class="reel-count">24 photographs</p>
+      </div>
+      <div class="reel-frame">
+        <div class="reel-window">
+          <div class="reel-track">
+            <img src="assets/photography/01.jpg" data-full="assets/photography/full/01.jpg" alt="Sunset over the rooftops" loading="lazy">
+            <img src="assets/photography/02.jpg" data-full="assets/photography/full/02.jpg" alt="Clock tower above orange blooms" loading="lazy">
+            <img src="assets/photography/03.jpg" data-full="assets/photography/full/03.jpg" alt="Purple dusk reflected in a pond" loading="lazy">
+            <img src="assets/photography/04.jpg" data-full="assets/photography/full/04.jpg" alt="Autumn maple leaves" loading="lazy">
+            <img src="assets/photography/05.jpg" data-full="assets/photography/full/05.jpg" alt="Evening light through the branches" loading="lazy">
+            <img src="assets/photography/06.jpg" data-full="assets/photography/full/06.jpg" alt="Bare trees reflected in meltwater" loading="lazy">
+            <img src="assets/photography/07.jpg" data-full="assets/photography/full/07.jpg" alt="A red-brick landmark reflected after the rain" loading="lazy">
+            <img src="assets/photography/08.jpg" data-full="assets/photography/full/08.jpg" alt="Street lamps at dusk" loading="lazy">
+            <img src="assets/photography/09.jpg" data-full="assets/photography/full/09.jpg" alt="Self-portrait in the dark" loading="lazy">
+            <img src="assets/photography/10.jpg" data-full="assets/photography/full/10.jpg" alt="Self-portrait" loading="lazy">
+            <img src="assets/photography/11.jpg" data-full="assets/photography/full/11.jpg" alt="City skyline mirrored in a puddle" loading="lazy">
+            <img src="assets/photography/12.jpg" data-full="assets/photography/full/12.jpg" alt="With the Spirit of Detroit" loading="lazy">
+            <img src="assets/photography/13.jpg" data-full="assets/photography/full/13.jpg" alt="Winter sun on melting snow" loading="lazy">
+            <img src="assets/photography/14.jpg" data-full="assets/photography/full/14.jpg" alt="A candle-lit corner with flowers" loading="lazy">
+            <img src="assets/photography/15.jpg" data-full="assets/photography/full/15.jpg" alt="Mirror selfie" loading="lazy">
+            <img src="assets/photography/16.jpg" data-full="assets/photography/full/16.jpg" alt="Snow, clouds and the Wayne State W" loading="lazy">
+            <img src="assets/photography/17.jpg" data-full="assets/photography/full/17.jpg" alt="Golden leaves framing a yellow pavilion" loading="lazy">
+            <img src="assets/photography/18.jpg" data-full="assets/photography/full/18.jpg" alt="The Renaissance Center, Detroit" loading="lazy">
+            <img src="assets/photography/19.jpg" data-full="assets/photography/full/19.jpg" alt="Cherry blossoms against a blue sky" loading="lazy">
+            <img src="assets/photography/20.jpg" data-full="assets/photography/full/20.jpg" alt="Portrait collage" loading="lazy">
+            <img src="assets/photography/21.jpg" data-full="assets/photography/full/21.jpg" alt="Behind the camera on a garden path" loading="lazy">
+            <img src="assets/photography/22.jpg" data-full="assets/photography/full/22.jpg" alt="Sunset behind a bare tree" loading="lazy">
+            <img src="assets/photography/23.jpg" data-full="assets/photography/full/23.jpg" alt="A duck, framed" loading="lazy">
+            <img src="assets/photography/24.jpg" data-full="assets/photography/full/24.jpg" alt="UMass Amherst sign reflected in a puddle" loading="lazy">
+          </div>
+        </div>
+        <button type="button" class="reel-toggle" aria-pressed="false">Pause</button>
+      </div>
+    </aside>
 
-  <div class="gallery">
-    <figure>
-      <img src="assets/gallery/photo1.jpg" alt="Placeholder photo 1" loading="lazy">
-      <figcaption>Midwest Theoretical Chemistry Conference, Detroit, 2025</figcaption>
-    </figure>
-    <figure>
-      <img src="assets/gallery/photo2.jpg" alt="Placeholder photo 2" loading="lazy">
-      <figcaption>Poster session, Theoretical Chemistry Symposium, IIT Madras, 2023</figcaption>
-    </figure>
-    <figure>
-      <img src="assets/gallery/photo3.jpg" alt="Placeholder photo 3" loading="lazy">
-      <figcaption>With the group at UMass Amherst, 2026</figcaption>
-    </figure>
-    <figure>
-      <img src="assets/gallery/photo4.jpg" alt="Placeholder photo 4" loading="lazy">
-      <figcaption>Ph.D. convocation, Visva-Bharati, 2024</figcaption>
-    </figure>
-    <figure>
-      <img src="assets/gallery/photo5.jpg" alt="Placeholder photo 5" loading="lazy">
-      <figcaption>Wayne State University, Detroit</figcaption>
-    </figure>
-    <figure>
-      <img src="assets/gallery/photo6.jpg" alt="Placeholder photo 6" loading="lazy">
-      <figcaption>Santiniketan</figcaption>
-    </figure>
+    <section class="gallery-main" aria-label="Moments">
+      <div class="moments-head">
+        <h2>Moments</h2>
+        <p>Conferences, labs and milestones along the way.</p>
+      </div>
+      <div class="gallery mosaic">
+        <figure>
+          <img src="assets/gallery/photo1.jpg" alt="Midwest Theoretical Chemistry Conference, Detroit, 2025" loading="lazy">
+          <figcaption>Midwest Theoretical Chemistry Conference, Detroit, 2025</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/gallery/photo2.jpg" alt="Poster session, Theoretical Chemistry Symposium, IIT Madras, 2023" loading="lazy">
+          <figcaption>Poster session, Theoretical Chemistry Symposium, IIT Madras, 2023</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/gallery/photo3.jpg" alt="With the group at UMass Amherst, 2026" loading="lazy">
+          <figcaption>With the group at UMass Amherst, 2026</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/gallery/photo4.jpg" alt="Ph.D. convocation, Visva-Bharati, 2024" loading="lazy">
+          <figcaption>Ph.D. convocation, Visva-Bharati, 2024</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/gallery/photo5.jpg" alt="Wayne State University, Detroit" loading="lazy">
+          <figcaption>Wayne State University, Detroit</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/gallery/photo6.jpg" alt="Santiniketan" loading="lazy">
+          <figcaption>Santiniketan</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <aside class="reel reel-right" aria-label="Digital Wheel 2">
+      <div class="reel-head">
+        <h2 class="reel-title">Digital Wheel 2</h2>
+        <p class="reel-count">26 photographs</p>
+      </div>
+      <div class="reel-frame">
+        <div class="reel-window">
+          <div class="reel-track">
+            <img src="assets/photography2/01.jpg" data-full="assets/photography2/full/01.jpg" alt="Playtime with the little one" loading="lazy">
+            <img src="assets/photography2/02.jpg" data-full="assets/photography2/full/02.jpg" alt="A walk under the trees" loading="lazy">
+            <img src="assets/photography2/03.jpg" data-full="assets/photography2/full/03.jpg" alt="Family day out" loading="lazy">
+            <img src="assets/photography2/04.jpg" data-full="assets/photography2/full/04.jpg" alt="Smiles with family" loading="lazy">
+            <img src="assets/photography2/05.jpg" data-full="assets/photography2/full/05.jpg" alt="Family moments" loading="lazy">
+            <img src="assets/photography2/06.jpg" data-full="assets/photography2/full/06.jpg" alt="Food and friends in Amherst" loading="lazy">
+            <img src="assets/photography2/07.jpg" data-full="assets/photography2/full/07.jpg" alt="Winter days" loading="lazy">
+            <img src="assets/photography2/08.jpg" data-full="assets/photography2/full/08.jpg" alt="A big family gathering" loading="lazy">
+            <img src="assets/photography2/09.jpg" data-full="assets/photography2/full/09.jpg" alt="With friends" loading="lazy">
+            <img src="assets/photography2/10.jpg" data-full="assets/photography2/full/10.jpg" alt="Holiday polar bears" loading="lazy">
+            <img src="assets/photography2/11.jpg" data-full="assets/photography2/full/11.jpg" alt="Festive selfie with friends" loading="lazy">
+            <img src="assets/photography2/12.jpg" data-full="assets/photography2/full/12.jpg" alt="Family collage" loading="lazy">
+            <img src="assets/photography2/13.jpg" data-full="assets/photography2/full/13.jpg" alt="Magnolias in bloom" loading="lazy">
+            <img src="assets/photography2/14.jpg" data-full="assets/photography2/full/14.jpg" alt="A spring tree and a pine cone" loading="lazy">
+            <img src="assets/photography2/15.jpg" data-full="assets/photography2/full/15.jpg" alt="Tulip season" loading="lazy">
+            <img src="assets/photography2/16.jpg" data-full="assets/photography2/full/16.jpg" alt="Blossoms and tulips" loading="lazy">
+            <img src="assets/photography2/17.jpg" data-full="assets/photography2/full/17.jpg" alt="Detroit by night" loading="lazy">
+            <img src="assets/photography2/18.jpg" data-full="assets/photography2/full/18.jpg" alt="With colleagues" loading="lazy">
+            <img src="assets/photography2/19.jpg" data-full="assets/photography2/full/19.jpg" alt="A family visit" loading="lazy">
+            <img src="assets/photography2/20.jpg" data-full="assets/photography2/full/20.jpg" alt="The many faces of a happy toddler" loading="lazy">
+            <img src="assets/photography2/21.jpg" data-full="assets/photography2/full/21.jpg" alt="An evening with family" loading="lazy">
+            <img src="assets/photography2/22.jpg" data-full="assets/photography2/full/22.jpg" alt="With friends, dressed up" loading="lazy">
+            <img src="assets/photography2/23.jpg" data-full="assets/photography2/full/23.jpg" alt="Campus days" loading="lazy">
+            <img src="assets/photography2/24.jpg" data-full="assets/photography2/full/24.jpg" alt="Friends in the lab" loading="lazy">
+            <img src="assets/photography2/25.jpg" data-full="assets/photography2/full/25.jpg" alt="A candle-lit evening with friends" loading="lazy">
+            <img src="assets/photography2/26.jpg" data-full="assets/photography2/full/26.jpg" alt="Friends around the table" loading="lazy">
+          </div>
+        </div>
+        <button type="button" class="reel-toggle" aria-pressed="false">Pause</button>
+      </div>
+    </aside>
   </div>
 </main>
 

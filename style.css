@@ -180,6 +180,7 @@ p { margin: 0 0 .75rem; }
 .nav-links a[aria-current="page"] { color: var(--ink); text-decoration: underline; text-underline-offset: 6px; }
 
 .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px 20px; }
+.gallery-main .gallery { grid-template-columns: repeat(2, 1fr); }
 .gallery figure {
   margin: 0; cursor: zoom-in;
 }
@@ -272,3 +273,81 @@ canvas.anim {
 .jline-text { margin: 1rem 0 0; min-height: 3.2em; max-width: 46em; color: var(--muted); }
 .jline-text strong { color: var(--ink); font-weight: 600; }
 @media (max-width: 600px) { .jline .l { display: none; } }
+
+/* ---------- gallery page: two Digital Wheels framing the Moments mosaic ---------- */
+.gallery-page { padding-top: 0; }
+.gallery-page .wrap { max-width: 1320px; }
+.g-hero { padding-top: 56px; padding-bottom: 8px; }
+.g-hero .intro { max-width: 44em; }
+.gallery-layout {
+  display: grid; grid-template-columns: 230px minmax(0, 1fr) 230px; gap: 40px;
+  align-items: start; padding-top: 24px; padding-bottom: 24px;
+}
+
+/* wheels */
+.reel { position: sticky; top: 76px; }
+.reel-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 10px; }
+.reel-title { font-size: 1.25rem; margin: 0; }
+.reel-count { margin: 0; color: var(--muted); font-size: .82rem; font-variant-numeric: tabular-nums; }
+.reel-frame {
+  position: relative; border-radius: 18px; padding: 10px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--ink) 5%, transparent), color-mix(in srgb, var(--ink) 9%, transparent));
+  box-shadow: inset 0 0 0 1px var(--rule);
+}
+.reel-window {
+  position: relative; height: min(calc(100vh - 210px), 620px); overflow: hidden; perspective: 900px;
+  -webkit-mask-image: linear-gradient(transparent, #000 16%, #000 84%, transparent);
+          mask-image: linear-gradient(transparent, #000 16%, #000 84%, transparent);
+}
+/* the "focus" line across the middle of the wheel */
+.reel-frame::before, .reel-frame::after {
+  content: ""; position: absolute; top: 50%; width: 8px; height: 2px; background: var(--teal); border-radius: 2px; z-index: 2;
+}
+.reel-frame::before { left: 0; } .reel-frame::after { right: 0; }
+.reel-track { position: absolute; inset: 0; }
+.reel-track img {
+  position: absolute; left: 0; top: 0; width: 100%; object-fit: cover; border-radius: 10px;
+  background: var(--rule); cursor: zoom-in; transform-origin: 50% 50%; will-change: transform;
+  box-shadow: 0 10px 24px -14px rgba(0, 0, 0, .55);
+}
+.reel-track img:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+.reel-toggle {
+  position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 3;
+  font: 500 .78rem/1 var(--sans); color: var(--ink); background: var(--paper);
+  border: 1px solid var(--rule); border-radius: 999px; padding: 7px 14px; cursor: pointer; opacity: .9;
+}
+.reel-toggle:hover { opacity: 1; }
+.reel-toggle:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* moments mosaic */
+.moments-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 14px; flex-wrap: wrap; }
+.moments-head h2 { font-size: 1.6rem; margin: 0; }
+.moments-head p { margin: 0; color: var(--muted); font-size: .95rem; }
+.gallery-main .mosaic { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.mosaic figure { position: relative; margin: 0; overflow: hidden; border-radius: 12px; cursor: zoom-in; background: var(--rule); }
+.mosaic figure:nth-child(1), .mosaic figure:nth-child(6) { grid-column: 1 / -1; }
+.mosaic img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 0; transition: transform .6s ease; }
+.mosaic figure:nth-child(1) img, .mosaic figure:nth-child(6) img { aspect-ratio: 16 / 8; }
+.mosaic figure:hover img { transform: scale(1.03); filter: none; }
+.mosaic figcaption {
+  position: absolute; left: 0; right: 0; bottom: 0; margin: 0; padding: 28px 14px 12px;
+  color: #fff; font-size: .9rem; line-height: 1.35;
+  background: linear-gradient(transparent, rgba(8, 12, 22, .72));
+}
+.mosaic figure:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+
+@media (max-width: 1120px) {
+  .gallery-layout { grid-template-columns: 190px minmax(0, 1fr) 190px; gap: 26px; }
+}
+@media (max-width: 880px) {
+  .gallery-layout { grid-template-columns: 1fr 1fr; gap: 20px; }
+  .gallery-main { grid-column: 1 / -1; order: -1; }
+  .reel { position: static; }
+  .reel-window { height: 440px; }
+}
+@media (max-width: 520px) {
+  .reel-window { height: 360px; }
+  .reel-head { flex-direction: column; gap: 2px; }
+  .gallery-main .mosaic { grid-template-columns: 1fr; }
+  .mosaic figure:nth-child(1) img, .mosaic figure:nth-child(6) img { aspect-ratio: 4 / 3; }
+}

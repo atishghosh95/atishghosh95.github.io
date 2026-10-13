@@ -13,7 +13,8 @@ A plain HTML/CSS site hosted free on GitHub Pages. No build tools needed.
 | `anim.js` | Draws the research animations | No |
 | `gallery.html` | The photo gallery page | Yes, to add or remove photos |
 | `gallery.js` | Opens photos full-size when clicked | No |
-| `assets/gallery/` | Your gallery photos | Upload photos here |
+| `assets/gallery/` | The six main gallery photos | Upload photos here |
+| `assets/photography/`, `assets/photography2/` | Digital Wheel 1 and 2 (small copies, with large copies in `full/`) | Replace files with the same names |
 | `assets/profile.jpg` | Your photo | Upload a new square photo with the same name to change it |
 | `assets/profile.png` | Small icon shown in the browser tab | No |
 | `assets/Atish_Ghosh_CV.pdf` | Your CV, linked from the header | Upload it here |
